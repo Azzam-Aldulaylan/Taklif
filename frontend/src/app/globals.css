@@ -1,0 +1,314 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --background: #e0dac8;
+  --foreground: #2c2c2c;
+  --card: #ffffff;
+  --card-foreground: #2c2c2c;
+  --popover: #ffffff;
+  --popover-foreground: #2c2c2c;
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+  --secondary: #f0ebe1;
+  --secondary-foreground: #2c2c2c;
+  --muted: #c0c2aa;
+  --muted-foreground: #77957b;
+  --accent: #9dab90;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #c0c2aa;
+  --input: #f0ebe1;
+  --ring: #dc2626;
+  --radius: 0.75rem;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Noto Sans Arabic", "Dubai", "Segoe UI Historic", "Tahoma", 
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  font-weight: 400;
+  direction: rtl;
+  text-align: right;
+}
+
+* {
+  border-color: var(--border);
+}
+
+.english-text {
+  direction: ltr;
+  text-align: left;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+.search-input:focus,
+.search-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-offset-width: 0px !important;
+  --tw-ring-width: 0px !important;
+  border-color: var(--primary) !important;
+  background-color: var(--input) !important;
+}
+
+.search-input:focus::-webkit-focus-ring-color {
+  outline-color: transparent !important;
+}
+
+input.search-input:focus-visible {
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-color: transparent !important;
+}
+
+input, textarea {
+  direction: ltr;
+  text-align: right;
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scroll snap for featured podcasts */
+.snap-x {
+  scroll-snap-type: x mandatory;
+}
+
+.snap-start {
+  scroll-snap-align: start;
+}
+
+/* Custom focus styles for better accessibility */
+.focus-visible\:ring-2:focus-visible {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
+    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
+    calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
+    var(--tw-shadow, 0 0 #0000);
+}
+
+/* Enhanced card hover effects */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Gradient fade for horizontal scroll */
+.gradient-fade-right::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 3rem;
+  background: linear-gradient(to left, var(--background), transparent);
+  pointer-events: none;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* Minimalist notice animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideOutFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.95);
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    width: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@keyframes slideInToRight {
+  from {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    width: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px) scale(0.95);
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.2s ease-in;
+}
+
+.animate-slide-out-from-right {
+  animation: slideOutFromRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation-fill-mode: both;
+}
+
+.animate-slide-in-to-right {
+  animation: slideInToRight 0.3s ease-in;
+  animation-fill-mode: both;
+}
+
+/* Search button animations - slides from within search bar */
+@keyframes slideOutFromSearch {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    width: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@keyframes slideInToSearch {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    width: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+    width: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.animate-slide-out-from-search {
+  animation: slideOutFromSearch 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation-fill-mode: both;
+}
+
+.animate-slide-in-to-search {
+  animation: slideInToSearch 0.3s ease-in;
+  animation-fill-mode: both;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-delay-1 {
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.animate-slide-up-delay-2 {
+  animation: slideUp 0.8s ease-out forwards;
+  animation-delay: 0.4s;
+  opacity: 0;
+  transform: translateY(30px);
+}

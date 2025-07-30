@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: thmanyah-db
+    environment:
+      POSTGRES_DB: thmanyah
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - thmanyah-network
+
+  # Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: thmanyah-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/thmanyah
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    networks:
+      - thmanyah-network
+    command: npm run start:dev
+
+  # Frontend Service  
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: thmanyah-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3000
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - thmanyah-network
+    command: npm run dev
+
+volumes:
+  postgres_data:
+
+networks:
+  thmanyah-network:
+    driver: bridge
