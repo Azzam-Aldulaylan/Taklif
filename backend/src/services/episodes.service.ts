@@ -13,17 +13,26 @@ export class EpisodesService {
 
   constructor(private httpService: HttpService) {}
 
-  async getEpisodesByFeedUrl(feedUrl: string): Promise<Episode[]> {
+  async getEpisodesByFeedUrl(
+    feedUrl: string,
+    podcastId?: string,
+  ): Promise<Episode[]> {
     try {
-      this.logger.log(`Fetching episodes from: ${feedUrl}`);
-      
+      this.logger.log(
+        `Fetching episodes from: ${feedUrl} for podcast ID: ${podcastId}`,
+      );
+
       const feed = await this.parser.parseURL(feedUrl);
-      
+
       // Convert RSS items to Episode objects (limit to 20 episodes)
-      const episodes: Episode[] = feed.items
-        .slice(0, 20)
-        .map((item, index) => ({
-          id: item.guid || `episode-${index + 1}`,
+      const episodes: Episode[] = feed.items.slice(0, 20).map((item, index) => {
+        const episodeId =
+          item.guid || `${podcastId || 'unknown'}-episode-${index + 1}`;
+        this.logger.debug(
+          `Generated episode ID: ${episodeId} for podcast ${podcastId}`,
+        );
+        return {
+          id: episodeId,
           title: item.title || `Episode ${index + 1}`,
           description: this.cleanDescription(
             item.contentSnippet || item.content || '',
@@ -38,7 +47,8 @@ export class EpisodesService {
             ? parseInt(item.itunes.season, 10)
             : undefined,
           imageUrl: this.extractImageUrl(item, feed),
-        }));
+        };
+      });
 
       this.logger.log(`Successfully parsed ${episodes.length} episodes`);
       return episodes;

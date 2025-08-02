@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowRight,
   Calendar,
@@ -25,10 +24,29 @@ import {
 
 export default function PodcastDetailPage() {
   const params = useParams();
+  const router = useRouter();
   const [podcast, setPodcast] = useState<Podcast | null>(null);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const handleHeaderSearch = (searchTerm: string) => {
+    router.push(`/?search=${encodeURIComponent(searchTerm)}`);
+  };
+
+  const handleLogoClick = () => {
+    router.push('/');
+  };
+
+  const handleBackClick = () => {
+    // Use browser's history to go back, preserving search results
+    if (window.history.length > 1) {
+      router.back();
+    } else {
+      // Fallback to home page if no history
+      router.push('/');
+    }
+  };
 
   useEffect(() => {
     const fetchPodcastDetails = async () => {
@@ -104,18 +122,21 @@ export default function PodcastDetailPage() {
   if (error || !podcast) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
+        <Header 
+          showSearchBar={true}
+          onSearch={handleHeaderSearch}
+          onLogoClick={handleLogoClick}
+          searchPlaceholder="ابحث عن بودكاست..."
+        />
         <div className="flex items-center justify-center flex-1 mt-20">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-foreground mb-4">
               {error || "البودكاست غير موجود"}
             </h1>
-            <Link href="/">
-              <Button variant="outline">
-                <ArrowRight className="ml-2 h-4 w-4" />
-                العودة
-              </Button>
-            </Link>
+            <Button variant="outline" onClick={handleBackClick}>
+              <ArrowRight className="ml-2 h-4 w-4" />
+              العودة
+            </Button>
           </div>
         </div>
       </div>
@@ -124,15 +145,18 @@ export default function PodcastDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header 
+        showSearchBar={true}
+        onSearch={handleHeaderSearch}
+        onLogoClick={handleLogoClick}
+        searchPlaceholder="ابحث عن بودكاست..."
+      />
       <div className="container mx-auto px-6 py-8">
         {/* Back Button */}
-        <Link href="/">
-          <Button variant="outline" className="mb-8">
-            <ArrowRight className="ml-2 h-4 w-4" />
-            العودة
-          </Button>
-        </Link>
+        <Button variant="outline" className="mb-8" onClick={handleBackClick}>
+          <ArrowRight className="ml-2 h-4 w-4" />
+          العودة
+        </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Podcast Info Card */}

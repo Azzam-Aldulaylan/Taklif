@@ -339,3 +339,43 @@ input, textarea {
   transform: none;
   box-shadow: none;
 }
+
+/* header search */
+.header-search-enter {
+  animation: headerSearchSlideIn 0.5s ease-out forwards;
+}
+
+.header-search-exit {
+  animation: headerSearchSlideOut 0.3s ease-in forwards;
+}
+
+@keyframes headerSearchSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes headerSearchSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.95);
+  }
+}
+
+/* Enhanced transition utilities */
+.transition-smooth {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-smooth-fast {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

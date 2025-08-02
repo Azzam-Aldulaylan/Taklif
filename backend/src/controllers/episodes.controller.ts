@@ -40,9 +40,10 @@ export class EpisodesController {
         };
       }
 
-      // Fetch episodes from the RSS feed
+      // Fetch episodes from the RSS feed, to string is used to ensure the URL is valid
       const episodes = await this.episodesService.getEpisodesByFeedUrl(
         podcast.feedUrl,
+        podcastId.toString(),
       );
 
       return {

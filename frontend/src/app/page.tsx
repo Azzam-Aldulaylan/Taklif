@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/header";
 import { SearchBar } from "@/components/search-bar";
 import { SectionedResults } from "@/components/sectioned-results";
@@ -11,12 +12,14 @@ import { podcastApi, ApiError } from "@/lib/api";
 import { Podcast } from "@/types/podcast";
 
 export default function Home() {
+  const searchParams = useSearchParams();
   const [podcasts, setPodcasts] = useState<Podcast[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [hasSearched, setHasSearched] = useState(false);
   const [lastSearchTerm, setLastSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<'home' | 'browse' | 'about'>('home');
+  const [showHeaderSearch, setShowHeaderSearch] = useState(false);
 
   useEffect(() => {
     podcastApi.getHealth().catch(() => setError("حدث خطأ في الاتصال"));
@@ -43,6 +46,37 @@ export default function Home() {
     }
   };
 
+  // Handle search from URL parameters (when navigating from podcast detail page)
+  useEffect(() => {
+    const searchQuery = searchParams.get('search');
+    if (searchQuery && searchQuery.trim()) {
+      setCurrentPage('home'); // Ensure we're on the home page
+      handleSearch(searchQuery.trim());
+    }
+  }, [searchParams]);
+
+  // Scroll detection for header search bar
+  useEffect(() => {
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          // Show header search when scrolled past 200px for earlier appearance
+          const shouldShow = window.scrollY > 200;
+          if (shouldShow !== showHeaderSearch) {
+            setShowHeaderSearch(shouldShow);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [showHeaderSearch]);
+
   const resetSearch = () => {
     setError(null);
     setHasSearched(false);
@@ -60,6 +94,15 @@ export default function Home() {
   const handleBrowseSearch = async (searchTerm: string) => {
     setCurrentPage('home');
     await handleSearch(searchTerm);
+  };
+
+  const handleLogoClick = () => {
+    resetSearch();
+    setCurrentPage('home');
+    // Clear the search parameter from URL
+    const url = new URL(window.location.href);
+    url.searchParams.delete('search');
+    window.history.replaceState({}, '', url.pathname);
   };
 
   const renderPageContent = () => {
@@ -135,6 +178,10 @@ export default function Home() {
         onSearchClick={() => navigateTo('home')}
         onBrowseClick={() => navigateTo('browse')}
         onAboutClick={() => navigateTo('about')}
+        showSearchBar={currentPage === 'home' && showHeaderSearch}
+        onSearch={handleBrowseSearch}
+        searchPlaceholder="ابحث عن بودكاست..."
+        onLogoClick={handleLogoClick}
       />
       {renderPageContent()}
     </div>
