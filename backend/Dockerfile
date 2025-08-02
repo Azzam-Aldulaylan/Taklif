@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -15,10 +15,37 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Production stage
-FROM node:18-alpine AS production
+# Development stage
+FROM node:20-alpine AS development
 
 WORKDIR /app
+
+# Install curl for health checks and global dependencies
+RUN apk add --no-cache curl
+RUN npm install -g @nestjs/cli
+
+# Copy package files
+COPY package*.json ./
+
+# Install ALL dependencies (including dev dependencies for development)
+RUN npm ci && npm cache clean --force
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 3000
+
+# Start the application in development mode
+CMD ["npm", "run", "start:dev"]
+
+# Production stage
+FROM node:20-alpine AS production
+
+WORKDIR /app
+
+# Install curl for health checks
+RUN apk add --no-cache curl
 
 # Copy package files
 COPY package*.json ./
@@ -42,7 +69,7 @@ EXPOSE 3000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000/api || exit 1
+  CMD curl -f http://localhost:3000/ || exit 1
 
 # Start the application
 CMD ["node", "dist/main"]

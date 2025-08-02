@@ -67,7 +67,7 @@ export class PodcastService {
   ): Promise<iTunesSearchResponse> {
     const params = {
       term: searchDto.term,
-      country: searchDto.country || 'US',
+      country: searchDto.country || 'SA',
       media: searchDto.media || 'podcast',
       entity: searchDto.entity || 'podcast',
       limit: 50,

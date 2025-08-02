@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap'); */
 
 :root {
   --background: #e0dac8;
@@ -19,7 +19,7 @@
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #c0c2aa;
-  --input: #f0ebe1;
+  --input: #e0dac8;
   --ring: #dc2626;
   --radius: 0.75rem;
 }
@@ -27,7 +27,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Noto Sans Arabic", "Dubai", "Segoe UI Historic", "Tahoma", 
+  font-family: "Dubai", "Segoe UI Historic", "Tahoma", 
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
@@ -55,7 +55,7 @@ body {
   --tw-ring-offset-shadow: none !important;
   --tw-ring-offset-width: 0px !important;
   --tw-ring-width: 0px !important;
-  border-color: var(--primary) !important;
+  border-color: var(--accent) !important;
   background-color: var(--input) !important;
 }
 
@@ -162,7 +162,6 @@ input, textarea {
   line-clamp: 3;
 }
 
-/* Minimalist notice animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -311,4 +310,32 @@ input, textarea {
   animation-delay: 0.4s;
   opacity: 0;
   transform: translateY(30px);
+}
+
+/* Search button */
+.search-button {
+  background: #dcd6c5;
+  color: #2c2c2c;
+  border: 1px solid #c0c2aa;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-button:hover:not(:disabled) {
+  background: #c0c2aa;
+  color: #2c2c2c;
+  border-color: #b5b78e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }

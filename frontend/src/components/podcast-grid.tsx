@@ -3,6 +3,7 @@
 import React from 'react';
 import { PodcastCard } from '@/components/podcast-card';
 import { Podcast } from '@/types/podcast';
+import { Search } from 'lucide-react';
 
 interface PodcastGridProps {
   podcasts: Podcast[];
@@ -29,21 +30,13 @@ const EmptyState = ({ message }: { message: string }) => (
   <div className="text-center py-12">
     <div className="mx-auto max-w-md">
       <div className="mx-auto h-12 w-12 text-gray-400">
-        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
-        </svg>
+        <Search className="h-12 w-12" />
       </div>
       <h3 className="mt-4 text-lg font-medium text-gray-900">No podcasts found</h3>
       <p className="mt-2 text-sm text-gray-500">{message}</p>
     </div>
   </div>
 );
-
-interface PodcastGridProps {
-  podcasts: Podcast[];
-  isLoading?: boolean;
-  emptyMessage?: string;
-}
 
 export function PodcastGrid({ 
   podcasts, 

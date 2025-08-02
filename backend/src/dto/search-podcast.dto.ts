@@ -7,7 +7,7 @@ export class SearchPodcastDto {
 
   @IsOptional()
   @IsString()
-  country?: string = 'US';
+  country?: string = 'SA';
 
   @IsOptional()
   @IsString()

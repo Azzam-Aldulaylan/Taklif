@@ -42,7 +42,7 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
           {truncateText(podcast.collectionName, featured ? 60 : 50)}
         </CardTitle>
         <div className={`flex items-center text-muted-foreground ${featured ? 'text-sm' : 'text-xs'}`}>
-          <User className="mr-2 h-4 w-4 m-1" />
+          <User className="ml-2 h-4 w-4" />
           {truncateText(podcast.artistName, featured ? 35 : 30)}
         </div>
       </CardHeader>
@@ -50,12 +50,12 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
       <CardContent className="space-y-3">
         <div className="flex items-center justify-center text-s text-muted-foreground">
           <div className="flex items-center">
-            <Calendar className="mr-2 h-4 w-4 m-1" />
+            <Calendar className="ml-2 h-4 w-4" />
             <span dir="ltr">{formatDate(podcast.releaseDate)}</span>
           </div>
           {podcast.trackTimeMillis && (
-            <div className="flex items-center ml-4">
-              <Clock className="mr-2 h-4 w-4 m-1 " />
+            <div className="flex items-center mr-4">
+              <Clock className="ml-2 h-4 w-4" />
               <span dir="ltr">{formatDuration(podcast.trackTimeMillis)}</span>
             </div>
           )}
@@ -64,8 +64,8 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
         <div className="flex items-center justify-center text-s text-muted-foreground">
           <span>{podcast.primaryGenreName}</span>
           {podcast.trackCount && (
-            <div className="flex items-center ml-4">
-              <Headphones className="mr-2 h-4 w-4 m-1" />
+            <div className="flex items-center mr-4">
+              <Headphones className="ml-2 h-4 w-4" />
               {podcast.trackCount} حلقة
             </div>
           )}

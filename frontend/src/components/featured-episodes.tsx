@@ -68,7 +68,7 @@ export function FeaturedEpisodes({
         {displayEpisodes.map((episode) => (
           <div
             key={episode.id}
-            className="flex items-start space-x-4 p-4 rounded-xl border border-border/50 bg-card hover:bg-accent/30 transition-all duration-200 cursor-pointer group hover:shadow-sm"
+            className="flex items-start gap-4 p-4 rounded-xl border border-border/50 bg-card hover:bg-accent/30 transition-all duration-200 cursor-pointer group hover:shadow-sm"
           >
             <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
               <Image
@@ -92,13 +92,13 @@ export function FeaturedEpisodes({
                   {truncateText(episode.description, 100)}
                 </p>
               )}
-              <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+              <div className="flex items-center gap-4 text-xs text-muted-foreground">
                 <div className="flex items-center">
-                  <Calendar className="mr-2 h-4 w-4 m-1" />
+                  <Calendar className="ml-1 h-4 w-4" />
                   <span dir="ltr">{formatDate(episode.releaseDate)}</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="w-4 h-4 m-1" />
+                  <Clock className="ml-1 h-4 w-4" />
                   <span dir="ltr">{episode.duration}</span>
                 </div>
               </div>

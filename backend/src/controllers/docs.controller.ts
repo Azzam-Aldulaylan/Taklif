@@ -14,7 +14,7 @@ export class DocsController {
           description: 'Search iTunes for podcasts and store results',
           requestBody: {
             term: 'فنجان',
-            country: 'US',
+            country: 'SA',
             media: 'podcast',
             entity: 'podcast',
           },

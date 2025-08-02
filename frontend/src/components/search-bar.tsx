@@ -48,9 +48,10 @@ export function SearchBar({
         }`}>
           <Button
             type="submit"
+            variant="secondary"
             disabled={!searchTerm.trim() || isLoading}
             isLoading={isLoading}
-            className="h-10 px-6 rounded-lg font-medium text-sm"
+            className="search-button h-10 px-6 rounded-lg font-medium text-sm"
           >
             ابحث
           </Button>

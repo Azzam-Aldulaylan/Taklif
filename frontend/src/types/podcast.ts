@@ -13,6 +13,7 @@ export interface Podcast {
   artworkUrl30: string;
   artworkUrl60: string;
   artworkUrl100: string;
+  artworkUrl600: string;
   collectionPrice: number;
   trackPrice: number;
   collectionHdPrice: number;
@@ -25,7 +26,6 @@ export interface Podcast {
   currency: string;
   primaryGenreName: string;
   contentAdvisoryRating: string;
-  artworkUrl600: string;
   genreIds: string[];
   genres: string[];
   createdAt: string;
@@ -42,7 +42,7 @@ export interface SearchResponse {
   message: string;
 }
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   data?: T;
   message?: string;
   error?: string;

@@ -40,7 +40,6 @@ async function apiRequest<T>(
       throw error;
     }
     
-    // Network or other errors
     throw new ApiError(0, error instanceof Error ? error.message : 'Network error');
   }
 }
