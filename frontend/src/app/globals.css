@@ -313,14 +313,14 @@ input, textarea {
 }
 
 /* Search button */
-.search-button {
+.button-style {
   background: #dcd6c5;
   color: #2c2c2c;
   border: 1px solid #c0c2aa;
   transition: all 0.2s ease-in-out;
 }
 
-.search-button:hover:not(:disabled) {
+.button-style:hover:not(:disabled) {
   background: #c0c2aa;
   color: #2c2c2c;
   border-color: #b5b78e;
@@ -328,12 +328,12 @@ input, textarea {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.search-button:active {
+.button-style:active {
   transform: translateY(0);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.search-button:disabled {
+.button-style:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;

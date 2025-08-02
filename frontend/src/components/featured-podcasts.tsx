@@ -45,7 +45,7 @@ export function FeaturedPodcasts({
           {displayPodcasts.map((podcast) => (
             <div 
               key={`${podcast.collectionId}-${podcast.trackId}`}
-              className="flex-shrink-0 w-48 sm:w-56 snap-start"
+              className="flex-shrink-0 w-48 sm:w-56 snap-start mb-4"
             >
               <PodcastCard
                 podcast={podcast}

@@ -1,6 +1,9 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
+
+// Created a utility function in a single file rather than multiple files for each utility
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -32,4 +35,14 @@ export function truncateText(text: string, maxLength: number): string {
 export function getHighResArtwork(artworkUrl: string, size: number = 600): string {
   // Replace the size in iTunes artwork URLs
   return artworkUrl.replace(/\/(\d+)x\d+(bb|bf|ss)\.(jpg|png)/, `/${size}x${size}bb.$3`);
+}
+
+export function formatEpisodeCount(count: number): string {
+  if (count === 1) {
+    return 'حلقة واحدة';
+  } else if (count === 2) {
+    return 'حلقتين';
+  } else {
+    return `${count} حلقة`;
+  }
 }

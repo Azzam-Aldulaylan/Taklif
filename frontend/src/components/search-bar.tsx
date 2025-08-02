@@ -51,7 +51,7 @@ export function SearchBar({
             variant="secondary"
             disabled={!searchTerm.trim() || isLoading}
             isLoading={isLoading}
-            className="search-button h-10 px-6 rounded-lg font-medium text-sm"
+            className="button-style h-10 px-6 rounded-lg font-medium text-sm"
           >
             ابحث
           </Button>
