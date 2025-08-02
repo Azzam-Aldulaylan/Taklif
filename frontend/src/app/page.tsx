@@ -52,7 +52,14 @@ export default function Home() {
 
   const navigateTo = (page: typeof currentPage) => {
     setCurrentPage(page);
-    if (page === 'home') resetSearch();
+    if (page === 'home' && currentPage === 'about') {
+      resetSearch();
+    }
+  };
+
+  const handleBrowseSearch = async (searchTerm: string) => {
+    setCurrentPage('home');
+    await handleSearch(searchTerm);
   };
 
   const renderPageContent = () => {
@@ -60,7 +67,7 @@ export default function Home() {
       case 'about':
         return <AboutPage onBack={() => navigateTo('home')} />;
       case 'browse':
-        return <BrowsePage onBack={() => navigateTo('home')} onSearch={handleSearch} />;
+        return <BrowsePage onBack={() => navigateTo('home')} onSearch={handleBrowseSearch} />;
       default:
         return (
           <main className="container mx-auto px-6 py-12 space-y-16">

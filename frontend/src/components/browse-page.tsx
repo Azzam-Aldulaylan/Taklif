@@ -65,8 +65,8 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
   }, []);
 
   const handleCategorySearch = (term: string) => {
-    onSearch(term);
     onBack();
+    onSearch(term);
   };
 
   return (

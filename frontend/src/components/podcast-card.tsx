@@ -110,16 +110,16 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
           </div>
 
           <div className="flex justify-center pt-2 mt-auto">
-            <a
-              href={podcast.trackViewUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={(e: React.MouseEvent) => {
+                e.stopPropagation();
+                window.open(podcast.trackViewUrl, '_blank', 'noopener,noreferrer');
+              }}
               className="button-style flex items-center gap-2 text-xs py-2 px-3 rounded-full"
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               <ExternalLink className="h-3 w-3 flex-shrink-0" />
               <span>عرض في iTunes</span>
-            </a>
+            </button>
           </div>
         </CardContent>
       </div>
