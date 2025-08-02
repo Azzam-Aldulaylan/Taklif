@@ -39,11 +39,14 @@ export default function PodcastDetailPage() {
   };
 
   const handleBackClick = () => {
-    // Use browser's history to go back, preserving search results
-    if (window.history.length > 1) {
+    // Try router.back() first, but with a fallback to a specific page
+    const referrer = document.referrer;
+    const isFromSameOrigin = referrer && referrer.includes(window.location.origin);
+    
+    if (isFromSameOrigin) {
       router.back();
     } else {
-      // Fallback to home page if no history
+      // If no referrer or from external, go to home
       router.push('/');
     }
   };

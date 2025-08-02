@@ -34,6 +34,8 @@ export default function Home() {
     try {
       const response = await podcastApi.searchPodcasts(searchTerm);
       setPodcasts(response.podcasts || []);
+      sessionStorage.setItem('lastSearchTerm', searchTerm);
+      sessionStorage.setItem('lastSearchResults', JSON.stringify(response.podcasts || []));
 
       if (response.podcasts?.length === 0) {
         setError(`لم نجد بودكاست لـ "${searchTerm}". جرب كلمة بحث أخرى`);
@@ -46,14 +48,28 @@ export default function Home() {
     }
   };
 
-  // Handle search from URL parameters (when navigating from podcast detail page)
+  // Handle search from URL parameters (when navigating back from podcast detail page)
   useEffect(() => {
     const searchQuery = searchParams.get('search');
     if (searchQuery && searchQuery.trim()) {
       setCurrentPage('home'); // Ensure we're on the home page
       handleSearch(searchQuery.trim());
+    } else {
+      const storedSearchTerm = sessionStorage.getItem('lastSearchTerm');
+      const storedResults = sessionStorage.getItem('lastSearchResults');
+      
+      if (storedSearchTerm && storedResults && !hasSearched) {
+        try {
+          const parsedResults = JSON.parse(storedResults);
+          setLastSearchTerm(storedSearchTerm);
+          setPodcasts(parsedResults);
+          setHasSearched(true);
+        } catch (error) {
+          console.error('Failed to parse stored search results:', error);
+        }
+      }
     }
-  }, [searchParams]);
+  }, [searchParams, hasSearched]);
 
   // Scroll detection for header search bar
   useEffect(() => {
@@ -82,6 +98,9 @@ export default function Home() {
     setHasSearched(false);
     setPodcasts([]);
     setLastSearchTerm("");
+    // Clear stored search state
+    sessionStorage.removeItem('lastSearchTerm');
+    sessionStorage.removeItem('lastSearchResults');
   };
 
   const navigateTo = (page: typeof currentPage) => {
