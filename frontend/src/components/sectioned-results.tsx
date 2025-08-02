@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FeaturedPodcasts } from '@/components/featured-podcasts';
-import { FeaturedEpisodes, generateMockEpisodes } from '@/components/featured-episodes';
+import { FeaturedEpisodes, generatepodcastEpisodes } from '@/components/featured-episodes';
 import { PodcastGrid } from '@/components/podcast-grid';
 import { Podcast } from '@/types/podcast';
 
@@ -57,7 +57,7 @@ export function SectionedResults({
 
       {allPodcasts.length > 0 && (
         <FeaturedEpisodes
-          episodes={generateMockEpisodes(allPodcasts)}
+          episodes={generatepodcastEpisodes(allPodcasts)}
           title={searchTerm ? `أفضل الحلقات لـ "${searchTerm}"` : "أفضل الحلقات"}
           maxItems={12}
         />

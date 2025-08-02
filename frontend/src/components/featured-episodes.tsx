@@ -22,7 +22,7 @@ interface FeaturedEpisodesProps {
   maxItems?: number;
 }
 
-function generateMockEpisodes(podcasts: Podcast[]): Episode[] {
+function generatepodcastEpisodes(podcasts: Podcast[]): Episode[] {
   return podcasts
     .slice(0, 8)
     .flatMap((podcast, index) =>
@@ -109,4 +109,4 @@ export function FeaturedEpisodes({
     </section>
   );
 }
-export { generateMockEpisodes, type Episode };
+export { generatepodcastEpisodes, type Episode };

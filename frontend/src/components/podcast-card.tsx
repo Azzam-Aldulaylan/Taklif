@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Clock, Calendar, User, Headphones, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Podcast } from "@/types/podcast";
@@ -34,11 +35,12 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
   };
 
   return (
-    <Card
-      className={`h-full overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50 ${
-        featured ? "hover:shadow-xl hover:scale-[1.02]" : ""
-      } flex flex-col`}
-    >
+    <Link href={`/podcast/${podcast.id}`} className="block h-full">
+      <Card
+        className={`h-full overflow-hidden transition-all duration-300 hover:shadow-lg border-border/50 cursor-pointer ${
+          featured ? "hover:shadow-xl hover:scale-[1.02]" : ""
+        } flex flex-col`}
+      >
       <div className="relative aspect-square">
         <Image
           src={artworkUrl}
@@ -113,6 +115,7 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
               target="_blank"
               rel="noopener noreferrer"
               className="button-style flex items-center gap-2 text-xs py-2 px-3 rounded-full"
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               <ExternalLink className="h-3 w-3 flex-shrink-0" />
               <span>عرض في iTunes</span>
@@ -121,5 +124,6 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
         </CardContent>
       </div>
     </Card>
+    </Link>
   );
 }

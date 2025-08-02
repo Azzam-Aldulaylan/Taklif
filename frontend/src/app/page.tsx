@@ -125,15 +125,9 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       <Header 
-        onSearchClick={() => {
-          navigateTo('home');
-        }}
-        onBrowseClick={() => {
-          navigateTo('browse');
-        }}
-        onAboutClick={() => {
-          navigateTo('about');
-        }}
+        onSearchClick={() => navigateTo('home')}
+        onBrowseClick={() => navigateTo('browse')}
+        onAboutClick={() => navigateTo('about')}
       />
       {renderPageContent()}
     </div>

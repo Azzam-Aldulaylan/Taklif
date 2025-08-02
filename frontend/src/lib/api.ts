@@ -1,4 +1,4 @@
-import { Podcast, SearchRequest, SearchResponse, PodcastListResponse, HealthResponse } from '@/types/podcast';
+import { Podcast, SearchRequest, SearchResponse, PodcastResponse, PodcastListResponse, HealthResponse, Episode } from '@/types/podcast';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
@@ -65,8 +65,13 @@ export const podcastApi = {
   },
 
   // Get podcast by ID
-  async getPodcastById(id: number): Promise<Podcast> {
-    return apiRequest<Podcast>(`/podcasts/${id}`);
+  async getPodcastById(id: number): Promise<PodcastResponse> {
+    return apiRequest<PodcastResponse>(`/podcasts/${id}`);
+  },
+
+  // Get episodes for a podcast
+  async getEpisodesByPodcastId(id: number): Promise<{ episodes: Episode[] }> {
+    return apiRequest<{ episodes: Episode[] }>(`/episodes/podcast/${id}`);
   },
 };
 

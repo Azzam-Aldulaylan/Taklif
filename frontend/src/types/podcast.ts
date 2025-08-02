@@ -42,6 +42,11 @@ export interface SearchResponse {
   message: string;
 }
 
+export interface PodcastResponse {
+  podcast: Podcast;
+  message: string;
+}
+
 export interface ApiResponse<T = unknown> {
   data?: T;
   message?: string;
@@ -58,4 +63,16 @@ export interface HealthResponse {
   timestamp: string;
   service: string;
   version: string;
+}
+
+export interface Episode {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  publishDate: string;
+  audioUrl: string;
+  episodeNumber?: number;
+  seasonNumber?: number;
+  imageUrl?: string;
 }
