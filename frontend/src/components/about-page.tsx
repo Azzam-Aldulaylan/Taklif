@@ -10,24 +10,38 @@ interface AboutPageProps {
   onBack: () => void;
 }
 
-const SKILLS_CATEGORIES = [
+const skillsCategories = [
   {
     title: "Frontend",
-    skills: ["React & Next.js", "TypeScript", "Tailwind CSS", "UI/UX Design"]
+    skills: [
+      "React & Next.js",
+      "React Native",
+      "TypeScript",
+      "Tailwind CSS",
+      "UI/UX Design",
+    ],
   },
   {
-    title: "Backend", 
-    skills: ["Node.js & Express", "REST APIs", "PostgreSQL"]
+    title: "Backend",
+    skills: ["Django", "PHP Laravel", "NestJS", "REST APIs", "MySQL/PostgreSQL"],
   },
   {
     title: "Tools & DevOps",
-    skills: ["Docker", "CI/CD", "ArgoCD / Sentry / Grafana"]
-  }
+    skills: ["Docker", "CI/CD", "ArgoCD", "Sentry", "Grafana"],
+  },
 ];
 
-const CONTACT_INFO = [
-  { icon: Mail, text: "Aldulaylan.A@gmail.com" },
-  { icon: Globe, text: "LinkedIn" },
+const contactInfo = [
+  {
+    icon: Mail,
+    text: "Aldulaylan.A@gmail.com",
+    link: "mailto:Aldulaylan.A@gmail.com",
+  },
+  {
+    icon: Globe,
+    text: "LinkedIn",
+    link: "https://sa.linkedin.com/in/a-aldulaylan",
+  },
 ];
 
 export function AboutPage({ onBack }: AboutPageProps) {
@@ -57,28 +71,47 @@ export function AboutPage({ onBack }: AboutPageProps) {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <CardTitle className="text-4xl font-light">
+              <CardTitle className="text-4xl text-primary">
                 عزام الدليلان
               </CardTitle>
               <p className="text-lg text-muted-foreground">مهندس برمجيات أول</p>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="prose prose-lg max-w-none text-right">
-                <p className="text-base leading-relaxed text-foreground">
-                  اهلا, أنا عزام الدليلان. مهندس برمجيات أول شغوف بالتقنية
-                  والابتكار. أحب بناء تطبيقات ومواقع ويب تركّز على تجربة
-                  المستخدم.
-                </p>
-                <p className="text-base leading-relaxed text-foreground">
-                  متخصص في تطوير الويب الكامل (Full-Stack Development) باستخدام
-                  تقنيات مثل React، Next.js، Node.js، والتعامل مع قواعد البيانات
-                  المختلفة.
-                </p>
-                <p className="text-base leading-relaxed text-foreground">
-                  هذا المشروع (تكليف) هو منصة مبسطة للبحث عن بودكاست، تهدف إلى
-                  مساعدة المستخدمين في اكتشاف المحتوى الصوتي المناسب لاهتماماتهم
-                  بسهولة وسرعة.
-                </p>
+            <CardContent className="space-y-8">
+              <div className="text-right space-y-6">
+                <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/10">
+                  <p className="text-lg leading-relaxed text-foreground font-light">
+                    اهلا, أنا{" "}
+                    <span className="font-semibold text-primary">
+                      عزام الدليلان
+                    </span>
+                    . مهندس برمجيات أول شغوف بالتقنية والابتكار. أحب بناء
+                    تطبيقات ومواقع ويب تركّز على تجربة المستخدم المميزة.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-muted/30 rounded-lg p-5 border border-muted/50">
+                    <h4 className="text-lg font-semibold text-primary mb-3 flex items-center">
+                      التخصص
+                    </h4>
+                    <p className="text-base leading-relaxed text-foreground">
+                      متخصص في تطوير الويب الكامل (Full-Stack Development)
+                      باستخدام تقنيات حديثة مثل React، Next.js، Django، والتعامل
+                      مع قواعد البيانات المختلفة.
+                    </p>
+                  </div>
+
+                  <div className="bg-muted/30 rounded-lg p-5 border border-muted/50">
+                    <h4 className="text-lg font-semibold text-primary mb-3 flex items-center">
+                      المشروع
+                    </h4>
+                    <p className="text-base leading-relaxed text-foreground">
+                      هذا المشروع (تكليف) هو منصة مبسطة للبحث عن بودكاست، تهدف
+                      إلى مساعدة المستخدمين في اكتشاف المحتوى الصوتي المناسب
+                      لاهتماماتهم بسهولة وسرعة.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div className="pt-6 border-t">
@@ -86,9 +119,9 @@ export function AboutPage({ onBack }: AboutPageProps) {
                   التخصصات والمهارات
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {SKILLS_CATEGORIES.map((category, categoryIndex) => (
+                  {skillsCategories.map((category, categoryIndex) => (
                     <div key={categoryIndex} className="space-y-3">
-                      <h4 className="text-lg font-medium text-primary mb-3">
+                      <h4 className="text-lg font-medium text-primary text-center mb-3">
                         {category.title}
                       </h4>
                       <div className="space-y-2">
@@ -109,39 +142,20 @@ export function AboutPage({ onBack }: AboutPageProps) {
               <div className="pt-6 border-t">
                 <h3 className="text-xl font-semibold mb-4">التواصل</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {CONTACT_INFO.map(({ icon: Icon, text }, index) => (
-                    <div
+                  {contactInfo.map(({ icon: Icon, text, link }, index) => (
+                    <a
                       key={index}
-                      className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg"
+                      href={link}
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
-                      <Icon className="h-5 w-5 text-primary" />
-                      <span className="text-sm">{text}</span>
-                    </div>
+                      <div className="flex items-center space-x-3 p-3 bg-muted/30 rounded-lg">
+                        <Icon className="h-5 w-5 text-primary" />
+                        <span className="text-s mr-2">{text}</span>
+                      </div>
+                    </a>
                   ))}
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-2xl font-light">
-                حول مشروع تكليف
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="prose max-w-none text-right">
-                <p className="text-base leading-relaxed text-foreground">
-                  تكليف هو مشروع شخصي يهدف إلى إنشاء منصة بحث متقدمة للبودكاست
-                  باللغة العربية. يستخدم المشروع تقنيات حديثة مثل Next.js 14 في
-                  الواجهة الأمامية و NestJS في الخلفية، مع التكامل مع iTunes API
-                  لجلب بيانات البودكاست.
-                </p>
-                <p className="text-base leading-relaxed text-foreground">
-                  الهدف من المشروع هو توفير تجربة بحث سلسة ومرئية جذابة
-                  للمستخدمين العرب الباحثين عن محتوى البودكاست المناسب
-                  لاهتماماتهم.
-                </p>
               </div>
             </CardContent>
           </Card>
