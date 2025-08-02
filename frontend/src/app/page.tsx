@@ -123,7 +123,7 @@ export default function Home() {
 
             <div className="text-center pt-8">
               <div className="max-w-3xl mx-auto">
-                <h2 className="text-4xl font-light tracking-tight text-foreground">
+                <h2 className="text-4xl font-medium tracking-tight text-foreground">
                   كل ما عليك هو أن تبدأ بالبحث
                 </h2>
               </div>

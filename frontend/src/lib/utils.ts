@@ -42,6 +42,8 @@ export function formatEpisodeCount(count: number): string {
     return 'حلقة واحدة';
   } else if (count === 2) {
     return 'حلقتين';
+  } else if (count > 2 && count < 11) { 
+    return `${count} حلقات`;
   } else {
     return `${count} حلقة`;
   }

@@ -1,5 +1,4 @@
 @import "tailwindcss";
-/* @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap'); */
 
 :root {
   --background: #e0dac8;
@@ -27,7 +26,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: "Dubai", "Segoe UI Historic", "Tahoma", 
+  font-family: var(--font-tajawal), "Tajawal",
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
