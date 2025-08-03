@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Param,
+  Query,
   HttpException,
   HttpStatus,
 } from '@nestjs/common';
@@ -17,62 +18,67 @@ export class EpisodesController {
   ) {}
 
   @Get('podcast/:id')
-  async getEpisodesByPodcastId(@Param('id') id: string): Promise<{
+  async getEpisodesByPodcastId(
+    @Param('id') id: string,
+    @Query('page') page = '1',
+    @Query('limit') limit = '10',
+  ): Promise<{
     message: string;
     episodes: Episode[];
+    hasMore: boolean;
+    total: number;
+    currentPage: number;
+    totalPages: number;
   }> {
     try {
       const podcastId = parseInt(id, 10);
       if (isNaN(podcastId)) {
-        throw new HttpException(
-          'Invalid podcast ID format',
-          HttpStatus.BAD_REQUEST,
-        );
+        throw new HttpException('Invalid podcast ID', HttpStatus.BAD_REQUEST);
       }
 
-      // Get the podcast to extract the feed URL
+      const currentPage = Math.max(1, parseInt(page, 10));
+      const pageLimit = Math.min(50, Math.max(1, parseInt(limit, 10)));
+
       const podcast = await this.podcastService.getPodcastById(podcastId);
       
       if (!podcast.feedUrl) {
         return {
-          message: 'No RSS feed available for this podcast',
+          message: 'No RSS feed available',
           episodes: [],
+          hasMore: false,
+          total: 0,
+          currentPage,
+          totalPages: 0,
         };
       }
 
-      // Fetch episodes from the RSS feed, to string is used to ensure the URL is valid
-      const episodes = await this.episodesService.getEpisodesByFeedUrl(
+      const result = await this.episodesService.getEpisodesByFeedUrl(
         podcast.feedUrl,
         podcastId.toString(),
+        currentPage,
+        pageLimit,
       );
 
       return {
         message: 'Episodes retrieved successfully',
-        episodes,
+        episodes: result.episodes,
+        hasMore: result.hasMore,
+        total: result.total,
+        currentPage,
+        totalPages: Math.ceil(result.total / pageLimit),
       };
     } catch (error) {
-      if (error instanceof HttpException) {
-        throw error;
-      }
-
-      if (error instanceof Error && error.message.includes('not found')) {
-        throw new HttpException(
-          {
-            message: 'Podcast not found',
-            error: error.message,
-          },
-          HttpStatus.NOT_FOUND,
-        );
-      }
+      if (error instanceof HttpException) throw error;
 
       const errorMessage =
-        error instanceof Error ? error.message : 'Unknown error occurred';
+        error instanceof Error ? error.message : 'Unknown error';
+      const status = errorMessage.includes('not found')
+        ? HttpStatus.NOT_FOUND
+        : HttpStatus.INTERNAL_SERVER_ERROR;
+
       throw new HttpException(
-        {
-          message: 'Failed to retrieve episodes',
-          error: errorMessage,
-        },
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        `Failed to retrieve episodes: ${errorMessage}`,
+        status,
       );
     }
   }

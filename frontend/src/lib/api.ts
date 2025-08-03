@@ -69,9 +69,29 @@ export const podcastApi = {
     return apiRequest<PodcastResponse>(`/podcasts/${id}`);
   },
 
-  // Get episodes for a podcast
-  async getEpisodesByPodcastId(id: number): Promise<{ episodes: Episode[] }> {
-    return apiRequest<{ episodes: Episode[] }>(`/episodes/podcast/${id}`);
+  // Get episodes for a podcast with pagination
+  async getEpisodesByPodcastId(
+    id: number, 
+    page = 1, 
+    limit = 10
+  ): Promise<{ 
+    episodes: Episode[]; 
+    hasMore: boolean; 
+    total: number; 
+    currentPage: number; 
+    totalPages: number; 
+  }> {
+    const params = new URLSearchParams({
+      page: page.toString(),
+      limit: limit.toString(),
+    });
+    return apiRequest<{ 
+      episodes: Episode[]; 
+      hasMore: boolean; 
+      total: number; 
+      currentPage: number; 
+      totalPages: number; 
+    }>(`/episodes/podcast/${id}?${params}`);
   },
 };
 

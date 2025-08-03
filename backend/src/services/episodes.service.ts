@@ -15,25 +15,33 @@ export class EpisodesService {
 
   async getEpisodesByFeedUrl(
     feedUrl: string,
-    podcastId?: string,
-  ): Promise<Episode[]> {
+    podcastId = 'unknown',
+    page = 1,
+    limit = 10,
+  ): Promise<{ episodes: Episode[]; hasMore: boolean; total: number }> {
     try {
       this.logger.log(
-        `Fetching episodes from: ${feedUrl} for podcast ID: ${podcastId}`,
+        `Fetching episodes: ${feedUrl}, page ${page}, limit ${limit}`,
       );
 
       const feed = await this.parser.parseURL(feedUrl);
+      const allItems = feed.items || [];
+      const total = allItems.length;
+      
+      // Calculate pagination
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const paginatedItems = allItems.slice(startIndex, endIndex);
+      const hasMore = endIndex < total;
 
-      // Convert RSS items to Episode objects (limit to 20 episodes)
-      const episodes: Episode[] = feed.items.slice(0, 20).map((item, index) => {
+      // Convert RSS items to Episode objects
+      const episodes: Episode[] = paginatedItems.map((item, index) => {
         const episodeId =
-          item.guid || `${podcastId || 'unknown'}-episode-${index + 1}`;
-        this.logger.debug(
-          `Generated episode ID: ${episodeId} for podcast ${podcastId}`,
-        );
+          item.guid || `${podcastId}-episode-${startIndex + index + 1}`;
+        
         return {
           id: episodeId,
-          title: item.title || `Episode ${index + 1}`,
+          title: item.title || `Episode ${startIndex + index + 1}`,
           description: this.cleanDescription(
             item.contentSnippet || item.content || '',
           ),
@@ -51,10 +59,18 @@ export class EpisodesService {
       });
 
       this.logger.log(`Successfully parsed ${episodes.length} episodes`);
-      return episodes;
+      return {
+        episodes,
+        hasMore,
+        total,
+      };
     } catch (error) {
       this.logger.error(`Failed to fetch episodes from ${feedUrl}:`, error);
-      return []; // Return empty array if RSS parsing fails
+      return {
+        episodes: [],
+        hasMore: false,
+        total: 0,
+      }; // Return empty result if RSS parsing fails
     }
   }
 
