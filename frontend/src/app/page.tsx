@@ -140,7 +140,7 @@ export default function Home() {
               />
             )}
 
-            <div className="text-center pt-8">
+            <div className="text-center pt-8 animate-fade-in">
               <div className="max-w-3xl mx-auto">
                 <h2 className="text-4xl font-medium tracking-tight text-foreground">
                   كل ما عليك هو أن تبدأ بالبحث
@@ -148,7 +148,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="text-center">
+            <div className="text-center animate-delay-1">
               <div className="max-w-3xl mx-auto space-y-8">
                 <div className="flex justify-center">
                   <SearchBar

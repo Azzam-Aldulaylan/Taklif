@@ -72,7 +72,8 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-12">
-        <div className="mb-8">
+        {/* Back button */}
+        <div className="mb-8 animate-fade-in">
           <Button 
             onClick={onBack}
             variant="outline"
@@ -84,7 +85,8 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
         </div>
 
         <div className="space-y-12">
-          <div className="text-center">
+          {/* Page title */}
+          <div className="text-center animate-delay-1">
             <h1 className="text-4xl font-light tracking-tight text-foreground mb-4">
               تصفح البودكاست
             </h1>
@@ -93,7 +95,8 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
             </p>
           </div>
 
-          <Card>
+          {/* Categories card */}
+          <Card className="animate-delay-2">
             <CardHeader>
               <CardTitle className="flex items-center space-x-2 text-2xl font-light">
                 <TrendingUp className="h-6 w-6 text-primary" />
@@ -116,34 +119,39 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
             </CardContent>
           </Card>
 
+          {/* Popular podcasts section */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 animate-delay-3">
               <Star className="h-6 w-6 text-primary" />
               <h2 className="text-2xl font-light tracking-tight">
                 البودكاست الأكثر شعبية
               </h2>
             </div>
             
-            {isLoading ? (
-              <LoadingSkeleton />
-            ) : popularPodcasts.length > 0 ? (
-              <FeaturedPodcasts
-                podcasts={popularPodcasts}
-                title="البودكاست الأكثر شعبية"
-                maxItems={12}
-              />
-            ) : (
-              <Card>
-                <CardContent className="text-center py-12">
-                  <p className="text-muted-foreground">
-                    لا توجد بودكاست متاحة حالياً. تأكد من اتصال الخادم.
-                  </p>
-                </CardContent>
-              </Card>
-            )}
+            {/* Podcast list */}
+            <div className="animate-delay-4">
+              {isLoading ? (
+                <LoadingSkeleton />
+              ) : popularPodcasts.length > 0 ? (
+                <FeaturedPodcasts
+                  podcasts={popularPodcasts}
+                  title="البودكاست الأكثر شعبية"
+                  maxItems={12}
+                />
+              ) : (
+                <Card>
+                  <CardContent className="text-center py-12">
+                    <p className="text-muted-foreground">
+                      لا توجد بودكاست متاحة حالياً. تأكد من اتصال الخادم.
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
 
-          <Card>
+          {/* Quick suggestions card */}
+          <Card className="animate-delay-4">
             <CardHeader>
               <CardTitle className="text-2xl font-light">اقتراحات البحث السريع</CardTitle>
             </CardHeader>

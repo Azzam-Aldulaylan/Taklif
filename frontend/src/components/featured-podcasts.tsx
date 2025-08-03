@@ -42,10 +42,10 @@ export function FeaturedPodcasts({
       {/* Horizontal scrolling grid for featured podcasts - Minimalist style */}
       <div className="relative">
         <div className="flex space-x-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
-          {displayPodcasts.map((podcast) => (
+          {displayPodcasts.map((podcast, index) => (
             <div 
               key={`${podcast.collectionId}-${podcast.trackId}`}
-              className="flex-shrink-0 w-48 sm:w-56 snap-start mb-4"
+              className={`flex-shrink-0 w-48 sm:w-56 snap-start mb-4 animate-card-enter animate-stagger-${(index % 8) + 1}`}
             >
               <PodcastCard
                 podcast={podcast}

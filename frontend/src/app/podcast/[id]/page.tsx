@@ -155,15 +155,13 @@ export default function PodcastDetailPage() {
         searchPlaceholder="ابحث عن بودكاست..."
       />
       <div className="container mx-auto px-6 py-8">
-        {/* Back Button */}
-        <Button variant="outline" className="mb-8" onClick={handleBackClick}>
+        <Button variant="outline" className="mb-8 animate-fade-in" onClick={handleBackClick}>
           <ArrowRight className="ml-2 h-4 w-4" />
           العودة
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Podcast Info Card */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 animate-delay-1">
             <Card className="overflow-hidden">
               <div className="relative aspect-square">
                 <Image
@@ -223,13 +221,14 @@ export default function PodcastDetailPage() {
 
           {/* Episodes List */}
           <div className="lg:col-span-2">
-            <div className="mb-6">
+            <div className="mb-6 animate-delay-2">
               <h2 className="text-2xl font-bold text-foreground">
                 {formatEpisodeCount(episodes.length)}
               </h2>
             </div>
 
-            <div className="space-y-4">
+            {/* Episodes content */}
+            <div className="space-y-4 animate-delay-3">
               {episodes.length > 0 ? (
                 episodes.map((episode, index) => (
                   <Card
@@ -289,7 +288,7 @@ export default function PodcastDetailPage() {
                   </Card>
                 ))
               ) : (
-                <Card>
+                <Card className="animate-delay-4">
                   <CardContent className="p-6 text-center">
                     <p className="text-muted-foreground">
                       لا توجد حلقات متاحة لهذا البودكاست.

@@ -48,7 +48,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-12">
-        <div className="mb-8">
+        {/* Back button */}
+        <div className="mb-8 animate-fade-in">
           <Button
             onClick={onBack}
             variant="outline"
@@ -60,7 +61,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
         </div>
 
         <div className="max-w-4xl mx-auto space-y-8">
-          <Card className="overflow-hidden">
+          {/* Profile card */}
+          <Card className="overflow-hidden animate-delay-1">
             <CardHeader className="text-center pb-6">
               <div className="mx-auto w-32 h-32 rounded-full overflow-hidden mb-4 ring-2 ring-primary/20">
                 <Image
@@ -78,7 +80,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
             </CardHeader>
             <CardContent className="space-y-8">
               <div className="text-right space-y-6">
-                <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/10">
+                {/* Bio section */}
+                <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/10 animate-delay-2">
                   <p className="text-lg leading-relaxed text-foreground font-light">
                     اهلا, أنا{" "}
                     <span className="font-semibold text-primary">
@@ -89,7 +92,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Specialty cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-delay-3">
                   <div className="bg-muted/30 rounded-lg p-5 border border-muted/50">
                     <h4 className="text-lg font-semibold text-primary mb-3 flex items-center">
                       التخصص
@@ -114,7 +118,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
                 </div>
               </div>
 
-              <div className="pt-6 border-t">
+              {/* Skills section */}
+              <div className="pt-6 border-t animate-delay-4">
                 <h3 className="text-xl font-semibold mb-4">
                   التخصصات والمهارات
                 </h3>
@@ -139,7 +144,8 @@ export function AboutPage({ onBack }: AboutPageProps) {
                 </div>
               </div>
 
-              <div className="pt-6 border-t">
+              {/* Contact section */}
+              <div className="pt-6 border-t animate-delay-4">
                 <h3 className="text-xl font-semibold mb-4">التواصل</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {contactInfo.map(({ icon: Icon, text, link }, index) => (

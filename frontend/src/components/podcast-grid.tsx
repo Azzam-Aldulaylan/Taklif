@@ -53,11 +53,12 @@ export function PodcastGrid({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {podcasts.map((podcast) => (
-        <PodcastCard
-          key={`${podcast.collectionId}-${podcast.trackId}`}
-          podcast={podcast}
-        />
+      {podcasts.map((podcast, index) => (
+        <div key={`${podcast.collectionId}-${podcast.trackId}`} className={`animate-card-enter animate-stagger-${(index % 8) + 1}`}>
+          <PodcastCard
+            podcast={podcast}
+          />
+        </div>
       ))}
     </div>
   );
