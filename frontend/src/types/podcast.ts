@@ -75,4 +75,6 @@ export interface Episode {
   episodeNumber?: number;
   seasonNumber?: number;
   imageUrl?: string;
+  itunesUrl?: string;
+  guid?: string;
 }

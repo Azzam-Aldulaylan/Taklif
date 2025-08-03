@@ -180,6 +180,11 @@ input, textarea {
   transition: all 0.2s ease-out;
 }
 
+.episode-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 @keyframes fadeOut {
   from {
     opacity: 1;

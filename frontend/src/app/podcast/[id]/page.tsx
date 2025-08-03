@@ -34,21 +34,28 @@ export default function PodcastDetailPage() {
   const observerTarget = useRef<HTMLDivElement>(null);
 
   const loadMoreEpisodes = useCallback(async () => {
-    if (!podcast || loadingMore || !hasMore) return;
+    if (!podcast || loadingMore || !hasMore) {
+      return;
+    }
 
     try {
       setLoadingMore(true);
       const podcastId = parseInt(params.id as string, 10);
       const nextPage = currentPage + 1;
 
-      const response = await podcastApi.getEpisodesByPodcastId(podcastId, nextPage, 10);
+      const response = await podcastApi.getEpisodesByPodcastId(
+        podcastId,
+        nextPage,
+        10
+      );
+
 
       if (response.episodes.length > 0) {
-        setEpisodes(prev => [...prev, ...response.episodes]);
+        setEpisodes((prev) => [...prev, ...response.episodes]);
         setNewlyLoadedCount(response.episodes.length);
         setCurrentPage(nextPage);
         setHasMore(response.hasMore);
-        
+
         // Clear animation state after animation completes
         setTimeout(() => setNewlyLoadedCount(0), 600);
       } else {
@@ -56,6 +63,7 @@ export default function PodcastDetailPage() {
       }
     } catch (error) {
       console.error("Error loading more episodes:", error);
+      setHasMore(false);
     } finally {
       setLoadingMore(false);
     }
@@ -70,16 +78,20 @@ export default function PodcastDetailPage() {
           loadMoreEpisodes();
         }
       },
-      { threshold: 0.1 }
+      {
+        threshold: 0.1,
+        rootMargin: "100px", // Trigger 100px before reaching the element
+      }
     );
 
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
+    const currentTarget = observerTarget.current;
+    if (currentTarget) {
+      observer.observe(currentTarget);
     }
 
     return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
+      if (currentTarget) {
+        observer.unobserve(currentTarget);
       }
     };
   }, [loadMoreEpisodes, hasMore, loadingMore]);
@@ -104,6 +116,21 @@ export default function PodcastDetailPage() {
       // If no referrer or from external, go to home
       router.push("/");
     }
+  };
+
+  const handleEpisodeClick = (episode: Episode) => {
+    const targetUrl = episode.itunesUrl || podcast?.trackViewUrl;
+
+    if (!targetUrl) {
+      console.warn(
+        "No Apple Podcasts URL available for episode:",
+        episode.title
+      );
+      return;
+    }
+
+    // Open in Apple Podcasts
+    window.open(targetUrl, "_blank", "noopener,noreferrer");
   };
 
   useEffect(() => {
@@ -307,16 +334,24 @@ export default function PodcastDetailPage() {
                 <>
                   {episodes.map((episode, index) => {
                     const episodeId = episode.id || `episode-${index}`;
-                    const isNewlyLoaded = index >= episodes.length - newlyLoadedCount;
-                    const animationDelay = isNewlyLoaded ? (index - (episodes.length - newlyLoadedCount)) * 100 : 0;
-                    
+                    const isNewlyLoaded =
+                      index >= episodes.length - newlyLoadedCount;
+                    const animationDelay = isNewlyLoaded
+                      ? (index - (episodes.length - newlyLoadedCount)) * 100
+                      : 0;
+
                     return (
                       <Card
                         key={episodeId}
-                        className={`episode-item overflow-hidden hover:shadow-md transition-all duration-200 ${
-                          isNewlyLoaded ? 'episode-new' : ''
+                        className={`episode-item overflow-hidden hover:shadow-md transition-all duration-200 cursor-pointer ${
+                          isNewlyLoaded ? "episode-new" : ""
                         }`}
-                        style={isNewlyLoaded ? { animationDelay: `${animationDelay}ms` } : undefined}
+                        style={
+                          isNewlyLoaded
+                            ? { animationDelay: `${animationDelay}ms` }
+                            : undefined
+                        }
+                        onClick={() => handleEpisodeClick(episode)}
                       >
                         <CardContent className="p-6">
                           <div className="flex items-start gap-4">
@@ -337,9 +372,17 @@ export default function PodcastDetailPage() {
                             </div>
 
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-foreground text-lg leading-tight mb-2">
-                                {episode.title}
-                              </h3>
+                              <div className="flex items-start justify-between gap-2">
+                                <h3 className="font-semibold text-foreground text-lg leading-tight mb-2">
+                                  {episode.title}
+                                </h3>
+                                <div
+                                  className="flex-shrink-0"
+                                  title="فتح في Apple Podcasts"
+                                >
+                                  <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
+                                </div>
+                              </div>
 
                               {episode.description && (
                                 <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
@@ -375,13 +418,27 @@ export default function PodcastDetailPage() {
 
                   {/* Infinite scroll trigger */}
                   {hasMore && (
-                    <div ref={observerTarget} className="py-4">
-                      {loadingMore && (
+                    <div
+                      ref={observerTarget}
+                      className="py-8 flex items-center justify-center min-h-[60px]"
+                    >
+                      {loadingMore ? (
                         <div className="flex items-center justify-center">
                           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
                           <span className="mr-2 text-muted-foreground">
                             تحميل المزيد من الحلقات...
                           </span>
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <Button
+                            variant="outline"
+                            onClick={loadMoreEpisodes}
+                            disabled={loadingMore}
+                            className="transition-all duration-200 hover:scale-105"
+                          >
+                            تحميل المزيد من الحلقات
+                          </Button>
                         </div>
                       )}
                     </div>

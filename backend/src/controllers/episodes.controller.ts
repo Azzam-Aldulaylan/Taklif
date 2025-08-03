@@ -57,6 +57,7 @@ export class EpisodesController {
         podcastId.toString(),
         currentPage,
         pageLimit,
+        podcast.trackId,
       );
 
       return {
