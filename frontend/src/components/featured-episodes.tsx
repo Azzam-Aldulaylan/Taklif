@@ -68,7 +68,7 @@ export function FeaturedEpisodes({
         {displayEpisodes.map((episode) => (
           <div
             key={episode.id}
-            className="flex items-start gap-4 p-4 rounded-xl border border-border/50 bg-card hover:bg-accent/30 transition-all duration-200 cursor-pointer group hover:shadow-sm"
+            className="flex items-start gap-4 p-4 rounded-xl border border-border/0 bg-white hover:bg-accent/30 transition-all duration-200 cursor-pointer group hover:shadow-sm"
           >
             <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
               <Image

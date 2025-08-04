@@ -1,26 +1,42 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { ArrowRight, TrendingUp, Star } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { FeaturedPodcasts } from '@/components/featured-podcasts';
-import { podcastApi } from '@/lib/api';
-import { Podcast } from '@/types/podcast';
+import React, { useState, useEffect } from "react";
+import { ArrowRight, TrendingUp, Star, Tag } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { FeaturedPodcasts } from "@/components/featured-podcasts";
+import { podcastApi } from "@/lib/api";
+import { Podcast } from "@/types/podcast";
 
 interface BrowsePageProps {
   onBack: () => void;
   onSearch: (term: string) => void;
 }
 
-const POPULAR_CATEGORIES = [
-  'تقنية', 'علوم', 'تاريخ', 'فلسفة', 'أعمال', 'صحة', 
-  'رياضة', 'طبخ', 'موسيقى', 'أدب', 'سياسة', 'اقتصاد'
+const popularCategories = [
+  "تقنية",
+  "علوم",
+  "تاريخ",
+  "فلسفة",
+  "أعمال",
+  "صحة",
+  "رياضة",
+  "طبخ",
+  "موسيقى",
+  "أدب",
+  "سياسة",
+  "اقتصاد",
 ];
 
-const QUICK_SUGGESTIONS = [
-  'بودكاست عربي', 'تطوير الذات', 'ريادة الأعمال', 'علم النفس',
-  'التاريخ الإسلامي', 'برمجة', 'ذكاء اصطناعي', 'صحة ولياقة'
+const quickSuggestions = [
+  "بودكاست عربي",
+  "تطوير الذات",
+  "ريادة الأعمال",
+  "علم النفس",
+  "التاريخ الإسلامي",
+  "برمجة",
+  "ذكاء اصطناعي",
+  "صحة ولياقة",
 ];
 
 const LoadingSkeleton = () => (
@@ -51,10 +67,10 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
     const fetchPopularPodcasts = async () => {
       try {
         setIsLoading(true);
-        const response = await podcastApi.searchPodcasts('تقنية');
+        const response = await podcastApi.searchPodcasts("تقنية");
         setPopularPodcasts(response.podcasts?.slice(0, 12) || []);
       } catch (error) {
-        console.error('Failed to fetch popular podcasts:', error);
+        console.error("Failed to fetch popular podcasts:", error);
         setPopularPodcasts([]);
       } finally {
         setIsLoading(false);
@@ -73,12 +89,8 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-6 py-12">
         {/* Back button */}
-        <div className="mb-8 animate-fade-in">
-          <Button 
-            onClick={onBack}
-            variant="outline"
-            className="flex items-center space-x-2"
-          >
+        <div className=" flex align-items-center mb-8 animate-fade-in">
+          <Button onClick={onBack} variant="ghost" className="flex gap-2">
             <ArrowRight className="h-4 w-4" />
             <span>العودة للرئيسية</span>
           </Button>
@@ -87,7 +99,7 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
         <div className="space-y-12">
           {/* Page title */}
           <div className="text-center animate-delay-1">
-            <h1 className="text-4xl font-light tracking-tight text-foreground mb-4">
+            <h1 className="text-4xl font-medium tracking-tight text-foreground mb-4">
               تصفح البودكاست
             </h1>
             <p className="text-lg text-muted-foreground">
@@ -96,21 +108,21 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
           </div>
 
           {/* Categories card */}
-          <Card className="animate-delay-2">
+          <Card className="animate-delay-2 bg-white/90">
             <CardHeader>
-              <CardTitle className="flex items-center space-x-2 text-2xl font-light">
-                <TrendingUp className="h-6 w-6 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-2xl font-light">
+                <TrendingUp className="h-6 w-6 text-primary flex-shrink-0" />
                 <span>الفئات الشائعة</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                {POPULAR_CATEGORIES.map((term, index) => (
+                {popularCategories.map((term, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     onClick={() => handleCategorySearch(term)}
-                    className="h-12 text-base font-normal hover:bg-primary hover:text-primary-foreground"
+                    className="button-style h-12 text-base font-normal bg-primary hover:bg-primary hover:text-primary-foreground"
                   >
                     {term}
                   </Button>
@@ -121,23 +133,19 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
 
           {/* Popular podcasts section */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2 animate-delay-3">
-              <Star className="h-6 w-6 text-primary" />
-              <h2 className="text-2xl font-light tracking-tight">
+            <div className="flex align-items-center gap-2 animate-delay-3">
+              <Star className="h-6 w-6 text-primary flex-shrink-0" />
+              <h2 className="text-2xl font-medium tracking-tight">
                 البودكاست الأكثر شعبية
               </h2>
             </div>
-            
+
             {/* Podcast list */}
             <div className="animate-delay-4">
               {isLoading ? (
                 <LoadingSkeleton />
               ) : popularPodcasts.length > 0 ? (
-                <FeaturedPodcasts
-                  podcasts={popularPodcasts}
-                  title="البودكاست الأكثر شعبية"
-                  maxItems={12}
-                />
+                <FeaturedPodcasts podcasts={popularPodcasts} maxItems={12} />
               ) : (
                 <Card>
                   <CardContent className="text-center py-12">
@@ -151,20 +159,23 @@ export function BrowsePage({ onBack, onSearch }: BrowsePageProps) {
           </div>
 
           {/* Quick suggestions card */}
-          <Card className="animate-delay-4">
+          <Card className="animate-delay-4 bg-white/90">
             <CardHeader>
-              <CardTitle className="text-2xl font-light">اقتراحات البحث السريع</CardTitle>
+              <CardTitle className="flex items-center gap-2 text-2xl font-light">
+                <Tag className="h-6 w-6 text-primary flex-shrink-0" />
+                <span>اقتراحات البحث السريع</span>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="flex flex-wrap gap-2">
-                  {QUICK_SUGGESTIONS.map((suggestion, index) => (
+                <div className="flex flex-wrap justify-evenly gap-2">
+                  {quickSuggestions.map((suggestion, index) => (
                     <Button
                       key={index}
                       variant="secondary"
-                      size="sm"
+                      size="md"
                       onClick={() => handleCategorySearch(suggestion)}
-                      className="text-sm"
+                      className="button-style text-sm"
                     >
                       {suggestion}
                     </Button>

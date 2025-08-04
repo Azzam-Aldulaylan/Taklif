@@ -7,14 +7,12 @@ import { ChevronRight } from 'lucide-react';
 
 interface FeaturedPodcastsProps {
   podcasts: Podcast[];
-  title?: string;
   onViewAll?: () => void;
   maxItems?: number;
 }
 
 export function FeaturedPodcasts({ 
   podcasts, 
-  title = "Top podcasts",
   onViewAll,
   maxItems = 8
 }: FeaturedPodcastsProps) {
@@ -27,19 +25,18 @@ export function FeaturedPodcasts({
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-light tracking-tight text-foreground">{title}</h2>
         {podcasts.length > maxItems && onViewAll && (
           <button
             onClick={onViewAll}
             className="flex items-center text-primary hover:text-primary/80 transition-colors duration-200 group"
           >
-            <span className="text-sm font-medium">See All</span>
+            <span className="text-sm font-medium">عرض الكل</span>
             <ChevronRight className="ml-1 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         )}
       </div>
       
-      {/* Horizontal scrolling grid for featured podcasts - Minimalist style */}
+      {/* Horizontal scrolling grid for featured podcasts */}
       <div className="relative">
         <div className="flex space-x-6 overflow-x-auto pb-6 scrollbar-hide snap-x snap-mandatory">
           {displayPodcasts.map((podcast, index) => (

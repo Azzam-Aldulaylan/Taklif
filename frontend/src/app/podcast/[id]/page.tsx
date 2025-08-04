@@ -49,7 +49,6 @@ export default function PodcastDetailPage() {
         10
       );
 
-
       if (response.episodes.length > 0) {
         setEpisodes((prev) => [...prev, ...response.episodes]);
         setNewlyLoadedCount(response.episodes.length);
@@ -131,6 +130,12 @@ export default function PodcastDetailPage() {
 
     // Open in Apple Podcasts
     window.open(targetUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const handleAboutClick = () => {
+    console.log("Navigating to About page");
+    
+    router.push("/about");
   };
 
   useEffect(() => {
@@ -219,6 +224,7 @@ export default function PodcastDetailPage() {
           showSearchBar={true}
           onSearch={handleHeaderSearch}
           onLogoClick={handleLogoClick}
+          onAboutClick={handleAboutClick}
           searchPlaceholder="ابحث عن بودكاست..."
         />
         <div className="flex items-center justify-center flex-1 mt-20">
@@ -245,18 +251,20 @@ export default function PodcastDetailPage() {
         searchPlaceholder="ابحث عن بودكاست..."
       />
       <div className="container mx-auto px-6 py-8">
-        <Button
-          variant="outline"
-          className="mb-8 animate-fade-in"
-          onClick={handleBackClick}
-        >
-          <ArrowRight className="ml-2 h-4 w-4" />
-          العودة
-        </Button>
+        <div className=" flex align-items-center mb-8 animate-fade-in">
+          <Button
+            variant="ghost"
+            className="flex gap-2"
+            onClick={handleBackClick}
+          >
+            <ArrowRight className="ml-2 h-4 w-4" />
+            العودة
+          </Button>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-1 animate-delay-1">
-            <Card className="overflow-hidden">
+            <Card className="overflow-hidden bg-white/90">
               <div className="relative aspect-square">
                 <Image
                   src={getHighResArtwork(
@@ -343,7 +351,7 @@ export default function PodcastDetailPage() {
                     return (
                       <Card
                         key={episodeId}
-                        className={`episode-item overflow-hidden hover:shadow-md transition-all duration-200 cursor-pointer ${
+                        className={`bg-white/90 episode-item overflow-hidden hover:shadow-md transition-all duration-200 cursor-pointer ${
                           isNewlyLoaded ? "episode-new" : ""
                         }`}
                         style={
@@ -355,7 +363,7 @@ export default function PodcastDetailPage() {
                       >
                         <CardContent className="p-6">
                           <div className="flex items-start gap-4">
-                            <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
+                            <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
                               <Image
                                 src={
                                   episode.imageUrl ||
@@ -449,7 +457,7 @@ export default function PodcastDetailPage() {
                     <div className="py-4 text-center">
                       <p className="text-muted-foreground text-sm">
                         تم عرض جميع الحلقات (
-                        {formatEpisodeCount(episodes.length)} )
+                        {formatEpisodeCount(episodes.length)})
                       </p>
                     </div>
                   )}
