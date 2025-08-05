@@ -3,46 +3,15 @@
 import React from "react";
 import Image from "next/image";
 import { Clock, Play, Calendar } from "lucide-react";
-import { Podcast } from "@/types/podcast";
 import { formatDate, truncateText, getHighResArtwork } from "@/lib/utils";
+import { openInItunes } from "@/lib/itunes";
 
-interface Episode {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  releaseDate: string;
-  podcastName: string;
-  artworkUrl: string;
-}
+import { FeaturedEpisode } from "@/hooks";
 
 interface FeaturedEpisodesProps {
-  episodes: Episode[];
+  episodes: FeaturedEpisode[];
   title?: string;
   maxItems?: number;
-}
-
-function generatepodcastEpisodes(podcasts: Podcast[]): Episode[] {
-  return podcasts
-    .slice(0, 8)
-    .flatMap((podcast, index) =>
-      Array.from({ length: Math.random() > 0.5 ? 2 : 1 }, (_, i) => ({
-        id: `${podcast.collectionId}-episode-${i}`,
-        title: `${podcast.collectionName}: الحلقة ${50 - (index * 3 + i)}`,
-        description: "",
-        duration: `${Math.floor(Math.random() * 60 + 20)}:${Math.floor(
-          Math.random() * 60
-        )
-          .toString()
-          .padStart(2, "0")}`,
-        releaseDate: new Date(
-          Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000
-        ).toISOString(),
-        podcastName: podcast.collectionName,
-        artworkUrl: podcast.artworkUrl100 || podcast.artworkUrl600,
-      }))
-    )
-    .slice(0, 12);
 }
 
 export function FeaturedEpisodes({
@@ -69,6 +38,25 @@ export function FeaturedEpisodes({
           <div
             key={episode.id}
             className="flex items-start gap-4 p-4 rounded-xl border border-border/0 bg-white hover:bg-accent/30 transition-all duration-200 cursor-pointer group hover:shadow-sm"
+            onClick={() => {
+              if (episode.itunesUrl) {
+                openInItunes(episode.itunesUrl);
+              } else {
+                alert('رابط iTunes غير متوفر لهذه الحلقة');
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                if (episode.itunesUrl) {
+                  openInItunes(episode.itunesUrl);
+                } else {
+                  alert('رابط iTunes غير متوفر لهذه الحلقة');
+                }
+              }
+            }}
           >
             <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
               <Image
@@ -81,6 +69,11 @@ export function FeaturedEpisodes({
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
                 <Play className="w-5 h-5 text-white" fill="white" />
               </div>
+              {episode.itunesUrl && (
+                <div className="absolute top-1 right-1 bg-black/60 rounded-full p-1">
+                  <span className="text-white text-xs font-medium">🎧</span>
+                </div>
+              )}
             </div>
 
             <div className="flex-1 min-w-0">
@@ -109,4 +102,3 @@ export function FeaturedEpisodes({
     </section>
   );
 }
-export { generatepodcastEpisodes, type Episode };

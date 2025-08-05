@@ -9,12 +9,14 @@ interface FeaturedPodcastsProps {
   podcasts: Podcast[];
   onViewAll?: () => void;
   maxItems?: number;
+  title?: string;
 }
 
 export function FeaturedPodcasts({ 
   podcasts, 
   onViewAll,
-  maxItems = 8
+  maxItems = 8,
+  title
 }: FeaturedPodcastsProps) {
   const displayPodcasts = podcasts.slice(0, maxItems);
 
@@ -25,6 +27,11 @@ export function FeaturedPodcasts({
   return (
     <section className="space-y-6">
       <div className="flex items-center justify-between">
+        {title && (
+          <h2 className="text-2xl font-light tracking-tight text-foreground">
+            {title}
+          </h2>
+        )}
         {podcasts.length > maxItems && onViewAll && (
           <button
             onClick={onViewAll}
