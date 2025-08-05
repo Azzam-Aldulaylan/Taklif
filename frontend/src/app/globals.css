@@ -478,3 +478,122 @@ textarea {
   background-color: var(--background);
   border: 1px solid var(--background);
 }
+
+/* Search bar animations */
+.animate-search-enter {
+  animation: searchEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+}
+
+.animate-search-bar-transition {
+  animation: searchBarTransition 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes searchEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes searchBarTransition {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1.2);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateY(-80px) scale(1.1);
+  }
+  70% {
+    opacity: 0.95;
+    transform: translateY(-120px) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-150px) scale(1);
+  }
+}
+
+/* Main page layout transitions */
+.animate-layout-transition {
+  animation: layoutTransition 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes layoutTransition {
+  20% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Enhanced search bar size transitions */
+.search-bar-large {
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+.search-bar-small {
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+/* Search bar center-to-top transition */
+.animate-search-center-to-top {
+  animation: searchCenterToTop 0.4s ease-out forwards;
+}
+
+.animate-title-fade-out {
+  animation: titleFadeOut 0.2s ease-out forwards;
+}
+
+.animate-content-slide-up {
+  animation: contentSlideUp 0.4s ease-out forwards;
+}
+
+@keyframes searchCenterToTop {
+  0% {
+    transform: translateY(0) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-180px) scale(1);
+    opacity: 0.2;
+  }
+}
+
+@keyframes titleFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-30px);
+    visibility: hidden;
+  }
+}
+
+@keyframes contentSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
