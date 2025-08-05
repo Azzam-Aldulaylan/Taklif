@@ -16,8 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Podcast, Episode } from "@/types/podcast";
-import { podcastApi } from "@/lib/api";
-import { formatDate, getHighResArtwork, formatEpisodeCount } from "@/lib/utils";
+import { podcastApi, formatDate, getHighResArtwork, formatEpisodeCount, openInItunes } from "@/lib";
 
 export default function PodcastDetailPage() {
   const params = useParams();
@@ -118,18 +117,8 @@ export default function PodcastDetailPage() {
   };
 
   const handleEpisodeClick = (episode: Episode) => {
-    const targetUrl = episode.itunesUrl || podcast?.trackViewUrl;
-
-    if (!targetUrl) {
-      console.warn(
-        "No Apple Podcasts URL available for episode:",
-        episode.title
-      );
-      return;
-    }
-
-    // Open in Apple Podcasts
-    window.open(targetUrl, "_blank", "noopener,noreferrer");
+    const fallbackUrl = podcast?.trackViewUrl;
+    openInItunes(episode.itunesUrl, fallbackUrl);
   };
 
 

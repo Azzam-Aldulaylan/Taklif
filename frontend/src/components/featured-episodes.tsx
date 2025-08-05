@@ -3,8 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Clock, Play, Calendar } from "lucide-react";
-import { formatDate, truncateText, getHighResArtwork } from "@/lib/utils";
-import { openInItunes } from "@/lib/itunes";
+import { formatDate, truncateText, getHighResArtwork, openInItunes } from "@/lib";
 
 import { FeaturedEpisode } from "@/hooks";
 
