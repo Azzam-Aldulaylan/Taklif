@@ -41,7 +41,7 @@ export function Header({
     if (onLogoClick) {
       onLogoClick();
     } else {
-      window.location.href = '/';
+      window.location.href = "/";
     }
   };
 
@@ -80,18 +80,20 @@ export function Header({
           </button>
 
           {/* Desktop Search Bar */}
-          <div 
+          <div
             className={`hidden md:flex flex-1 max-w-md mx-6 transition-all duration-500 ease-in-out ${
-              showSearchBar 
-                ? 'opacity-100 scale-100 translate-y-0' 
-                : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
+              showSearchBar
+                ? "opacity-100 scale-100 translate-y-0"
+                : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
             }`}
           >
             <form onSubmit={handleSearch} className="relative w-full">
               <input
                 type="text"
                 value={searchTerm}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchTerm(e.target.value)
+                }
                 placeholder={searchPlaceholder}
                 className="w-full h-10 pl-10 pr-4 text-sm border border-border rounded-full bg-background/50 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                 dir="rtl"
@@ -101,26 +103,28 @@ export function Header({
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
-            <button
-              onClick={onSearchClick}
-              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
-            >
-              بحث
-            </button>
-            <button
-              onClick={onBrowseClick}
-              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
-            >
-              تصفح
-            </button>
-            <button
-              onClick={onAboutClick}
-              className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
-            >
-              حول
-            </button>
-          </nav>
+          {onSearchClick && onBrowseClick && onAboutClick && (
+            <nav className="hidden md:flex items-center gap-6">
+              <button
+                onClick={onSearchClick}
+                className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+              >
+                بحث
+              </button>
+              <button
+                onClick={onBrowseClick}
+                className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+              >
+                تصفح
+              </button>
+              <button
+                onClick={onAboutClick}
+                className="text-lg font-medium text-muted-foreground hover:text-primary transition-colors duration-200"
+              >
+                حول
+              </button>
+            </nav>
+          )}
 
           {/* Mobile Controls */}
           <div className="flex md:hidden items-center gap-2">
@@ -132,7 +136,7 @@ export function Header({
             >
               <Search className="h-5 w-5" />
             </button>
-            
+
             {/* Mobile Menu Toggle */}
             <button
               onClick={handleMobileMenuToggle}
@@ -155,7 +159,9 @@ export function Header({
               <input
                 type="text"
                 value={searchTerm}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setSearchTerm(e.target.value)
+                }
                 placeholder={searchPlaceholder}
                 className="w-full h-10 pl-10 pr-4 text-sm border border-border rounded-full bg-background/50 focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                 dir="rtl"
