@@ -1,7 +1,6 @@
 databases:
   - name: taklif-db
     databaseName: thmanyah
-    user: postgres
     plan: free
 
 services:
