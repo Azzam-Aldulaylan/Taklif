@@ -53,4 +53,4 @@ services:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_API_URL
-        value: https://taklif-backend.onrender.com/api
+        value: https://taklif-backend-vshl.onrender.com/api
