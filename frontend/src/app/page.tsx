@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Suspense } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Header } from "@/components/header";
@@ -12,7 +12,7 @@ import { ErrorCard } from "@/components/ui/error-card";
 import { podcastApi, ApiError } from "@/lib/api";
 import { Podcast } from "@/types/podcast";
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const [podcasts, setPodcasts] = useState<Podcast[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -267,5 +267,13 @@ export default function Home() {
       />
       {renderPageContent()}
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>...</div>}>
+      <HomeContent />
+    </Suspense>
   );
 }

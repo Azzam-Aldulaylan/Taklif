@@ -1,4 +1,4 @@
-import { Podcast, SearchRequest, SearchResponse, PodcastResponse, PodcastListResponse, HealthResponse, Episode } from '@/types/podcast';
+import { SearchRequest, SearchResponse, PodcastResponse, PodcastListResponse, HealthResponse, Episode } from '@/types/podcast';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
