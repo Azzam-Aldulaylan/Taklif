@@ -74,20 +74,32 @@ export class PodcastService {
     };
 
     try {
+      this.logger.log(`Searching params: ${JSON.stringify(params)}`);
+
       const response: AxiosResponse<iTunesSearchResponse> =
         await firstValueFrom(
-          this.httpService.get(this.iTunesBaseUrl, { params }),
+          this.httpService.get(this.iTunesBaseUrl, {
+            params,
+            timeout: 10000,
+          }),
         );
 
       this.logger.log(
-        `iTunes API returned ${response.data.resultCount} results`,
+        `iTunes API returned ${response.data.resultCount} results for term: "${searchDto.term}"`,
       );
+
+      if (response.data.resultCount === 0) {
+        this.logger.warn(
+          `No podcasts found for search term: "${searchDto.term}"`,
+        );
+      }
 
       return response.data;
     } catch (error) {
       this.logger.error(
-        `Error calling iTunes API: ${(error as Error).message}`,
+        `Error calling iTunes API with params ${JSON.stringify(params)}: ${(error as Error).message}`,
       );
+      this.logger.error(`Full error:`, error);
       throw new Error('Failed to fetch data from iTunes API');
     }
   }
