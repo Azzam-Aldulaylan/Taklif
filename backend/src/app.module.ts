@@ -23,7 +23,7 @@ import { Podcast } from './entities/podcast.entity';
         password: configService.get('DB_PASSWORD', 'password'),
         database: configService.get('DB_NAME', 'thmanyah_podcasts'),
         entities: [Podcast],
-        synchronize: configService.get('NODE_ENV') !== 'production',
+        synchronize: true,
         logging: configService.get('NODE_ENV') === 'development',
       }),
       inject: [ConfigService],
