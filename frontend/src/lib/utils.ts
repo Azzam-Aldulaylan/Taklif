@@ -48,3 +48,58 @@ export function formatEpisodeCount(count: number): string {
     return `${count} حلقة`;
   }
 }
+
+export function formatEpisodeDuration(duration: string): string {
+  // Handle various duration formats that might come from the API
+  if (!duration) return '';
+  
+  const hourMinuteMatch = duration.match(/^(\d{1,2}):(\d{2})$/);
+  if (hourMinuteMatch) {
+    const hours = parseInt(hourMinuteMatch[1]);
+    const minutes = parseInt(hourMinuteMatch[2]);
+    
+    if (hours <= 24 && minutes <= 59) {
+      return `${hours}:${minutes.toString().padStart(2, '0')}:00`;
+    }
+  }
+  
+  const timeMatch = duration.match(/^(\d{1,3}):(\d{2})(?::(\d{2}))?$/);
+  if (timeMatch) {
+    const firstNumber = parseInt(timeMatch[1]);
+    const secondNumber = parseInt(timeMatch[2]);
+    const thirdNumber = timeMatch[3] ? parseInt(timeMatch[3]) : 0;
+    
+    if (timeMatch[3]) {
+      return `${firstNumber}:${secondNumber.toString().padStart(2, '0')}:${thirdNumber.toString().padStart(2, '0')}`;
+    }
+    
+    if (firstNumber > 60) {
+      const hours = Math.floor(firstNumber / 60);
+      const minutes = firstNumber % 60;
+      return `${hours}:${minutes.toString().padStart(2, '0')}:${secondNumber.toString().padStart(2, '0')}`;
+    }
+    
+    return `${firstNumber}:${secondNumber.toString().padStart(2, '0')}`;
+  }
+  
+  const minutesMatch = duration.match(/(\d+)\s*(?:minutes?|mins?|م)/i);
+  const hoursMatch = duration.match(/(\d+)\s*(?:hours?|hrs?|ساعة)/i);
+  
+  let totalMinutes = 0;
+  if (hoursMatch) {
+    totalMinutes += parseInt(hoursMatch[1]) * 60;
+  }
+  if (minutesMatch) {
+    totalMinutes += parseInt(minutesMatch[1]);
+  }
+  
+  if (totalMinutes >= 60) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}:${minutes.toString().padStart(2, '0')}:00`;
+  } else if (totalMinutes > 0) {
+    return `${totalMinutes}:00`;
+  }
+  
+  return duration;
+}

@@ -16,7 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Header } from "@/components/header";
 import { Podcast, Episode } from "@/types/podcast";
-import { podcastApi, formatDate, getHighResArtwork, formatEpisodeCount, openInItunes } from "@/lib";
+import { podcastApi, formatDate, getHighResArtwork, formatEpisodeCount, openInItunes, formatEpisodeDuration } from "@/lib";
 
 export default function PodcastDetailPage() {
   const params = useParams();
@@ -324,7 +324,7 @@ export default function PodcastDetailPage() {
                   return (
                     <Card
                       key={episodeId}
-                      className={`bg-white/90 episode-item overflow-hidden hover:shadow-md transition-all duration-200 cursor-pointer ${
+                      className={`bg-white/90 episode-item overflow-hidden hover:shadow-md transition-all duration-200 cursor-pointer h-32 ${
                         isNewlyLoaded ? "episode-new" : ""
                       }`}
                       style={
@@ -334,8 +334,8 @@ export default function PodcastDetailPage() {
                       }
                       onClick={() => handleEpisodeClick(episode)}
                     >
-                      <CardContent className="p-6">
-                        <div className="flex items-start gap-4">
+                      <CardContent className="p-6 h-full">
+                        <div className="flex items-start gap-4 h-full">
                           <div className="relative w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
                             <Image
                               src={
@@ -352,36 +352,38 @@ export default function PodcastDetailPage() {
                             />
                           </div>
 
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2">
-                              <h3 className="font-semibold text-foreground text-lg leading-tight mb-2">
-                                {episode.title}
-                              </h3>
-                              <div
-                                className="flex-shrink-0"
-                                title="فتح في Apple Podcasts"
-                              >
-                                <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
+                          <div className="flex-1 min-w-0 flex flex-col justify-between h-full">
+                            <div className="flex-1">
+                              <div className="flex items-start justify-between gap-2">
+                                <h3 className="font-semibold text-foreground text-lg leading-tight mb-2 line-clamp-2">
+                                  {episode.title}
+                                </h3>
+                                <div
+                                  className="flex-shrink-0"
+                                  title="فتح في Apple Podcasts"
+                                >
+                                  <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
+                                </div>
                               </div>
+
+                              {episode.description && (
+                                <p className="text-muted-foreground text-sm mb-2 line-clamp-1">
+                                  {episode.description}
+                                </p>
+                              )}
                             </div>
 
-                            {episode.description && (
-                              <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
-                                {episode.description}
-                              </p>
-                            )}
-
-                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                              <div className="flex items-center">
-                                <Calendar className="ml-1 h-3 w-3" />
-                                <span dir="ltr">
+                            <div className="flex items-center gap-4 text-xs text-muted-foreground mt-auto">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-3 w-3 flex-shrink-0" />
+                                <span dir="ltr" className="translate-y-0.5">
                                   {formatDate(episode.publishDate)}
                                 </span>
                               </div>
                               {episode.duration && (
-                                <div className="flex items-center">
-                                  <Clock className="ml-1 h-3 w-3" />
-                                  <span dir="ltr">{episode.duration}</span>
+                                <div className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3 flex-shrink-0" />
+                                  <span dir="ltr" className="translate-y-0.5">{formatEpisodeDuration(episode.duration)}</span>
                                 </div>
                               )}
                               {episode.episodeNumber && (
