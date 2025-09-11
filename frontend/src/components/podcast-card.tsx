@@ -20,16 +20,24 @@ interface PodcastCardProps {
 }
 
 export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
+  const [imageLoaded, setImageLoaded] = React.useState(false);
+  const [imageError, setImageError] = React.useState(false);
+  
   const artworkUrl = getHighResArtwork(
     podcast.artworkUrl100 || podcast.artworkUrl600,
     featured ? 400 : 300
   );
 
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
   const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const target = e.currentTarget;
-    if (target.src !== podcast.artworkUrl100) {
+    if (target.src !== podcast.artworkUrl100 && !imageError) {
       target.src = podcast.artworkUrl100 || podcast.artworkUrl600;
     } else {
+      setImageError(true);
       target.src = "/podcast-placeholder.svg";
     }
   };
@@ -42,17 +50,28 @@ export function PodcastCard({ podcast, featured = false }: PodcastCardProps) {
         } flex flex-col`}
       >
         <div className="relative aspect-square">
+          {/* Placeholder while image is loading */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+              <div className="w-16 h-16 bg-gray-300 rounded-lg animate-pulse"></div>
+            </div>
+          )}
+          
           <Image
             src={artworkUrl}
             alt={podcast.collectionName}
             fill
-            className="object-cover"
+            className={`object-cover transition-opacity duration-300 ${
+              imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
             sizes={
               featured
                 ? "(max-width: 768px) 90vw, (max-width: 1200px) 40vw, 25vw"
                 : "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             }
+            onLoad={handleImageLoad}
             onError={handleImageError}
+            priority={featured}
           />
         </div>
 
