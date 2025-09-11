@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* CSS Custom Properties */
 :root {
   --background: #e0dac8;
   --foreground: #2c2c2c;
@@ -7,7 +8,7 @@
   --card-foreground: #2c2c2c;
   --popover: #ffffff;
   --popover-foreground: #2c2c2c;
-  --primary: ##f3f0ea;
+  --primary: #f3f0ea;
   --primary-foreground: #ffffff;
   --secondary: #f0ebe1;
   --secondary-foreground: #2c2c2c;
@@ -23,6 +24,7 @@
   --radius: 0.75rem;
 }
 
+/* Base Styles */
 body {
   position: relative;
   background-color: var(--background);
@@ -35,6 +37,7 @@ body {
   text-align: right;
 }
 
+/* Background decorations */
 body::before {
   content: "";
   position: fixed;
@@ -72,52 +75,12 @@ body::after {
   border-color: var(--border);
 }
 
+/* Utility Classes */
 .english-text {
   direction: ltr;
   text-align: left;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-}
-
-.search-input:focus,
-.search-input:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  --tw-ring-shadow: none !important;
-  --tw-ring-offset-shadow: none !important;
-  --tw-ring-offset-width: 0px !important;
-  --tw-ring-width: 0px !important;
-  border-color: var(--accent) !important;
-  background-color: var(--input) !important;
-}
-
-.search-input:focus::-webkit-focus-ring-color {
-  outline-color: transparent !important;
-}
-
-input.search-input:focus-visible {
-  --tw-ring-color: transparent !important;
-  --tw-ring-offset-color: transparent !important;
-}
-
-input,
-textarea {
-  direction: ltr;
-  text-align: right;
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
 }
 
 .scrollbar-hide {
@@ -130,47 +93,6 @@ textarea {
   display: none;
 }
 
-/* Smooth scroll snap for featured podcasts */
-.snap-x {
-  scroll-snap-type: x mandatory;
-}
-
-.snap-start {
-  scroll-snap-align: start;
-}
-
-/* Custom focus styles for better accessibility */
-.focus-visible\:ring-2:focus-visible {
-  outline: 2px solid transparent;
-  outline-offset: 2px;
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0
-    var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0
-    calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow),
-    var(--tw-shadow, 0 0 #0000);
-}
-
-/* Enhanced card hover effects */
-.transition-all {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* Gradient fade for horizontal scroll */
-.gradient-fade-right::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
-  width: 3rem;
-  background: linear-gradient(to left, var(--background), transparent);
-  pointer-events: none;
-}
-
-/* Line clamp utilities */
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -195,170 +117,29 @@ textarea {
   line-clamp: 3;
 }
 
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Search Input Styles */
+.search-input:focus,
+.search-input:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-offset-width: 0px !important;
+  --tw-ring-width: 0px !important;
+  border-color: var(--accent) !important;
+  background-color: var(--input) !important;
 }
 
-.episode-new {
-  animation: slideInUp 0.5s ease-out forwards;
+.search-input:focus::-webkit-focus-ring-color {
+  outline-color: transparent !important;
 }
 
-.episode-item {
-  transition: all 0.2s ease-out;
+input.search-input:focus-visible {
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-color: transparent !important;
 }
 
-.episode-item:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes slideOutFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(-20px) scale(0.95);
-    width: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    width: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-}
-
-@keyframes slideInToRight {
-  from {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-    width: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-  to {
-    opacity: 0;
-    transform: translateX(-20px) scale(0.95);
-    width: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.3s ease-out;
-}
-
-.animate-fade-out {
-  animation: fadeOut 0.2s ease-in;
-}
-
-.animate-slide-out-from-right {
-  animation: slideOutFromRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation-fill-mode: both;
-}
-
-.animate-slide-in-to-right {
-  animation: slideInToRight 0.3s ease-in;
-  animation-fill-mode: both;
-}
-
-/* Search button animations - slides from within search bar */
-@keyframes slideOutFromSearch {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-    width: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-    width: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-}
-
-@keyframes slideInToSearch {
-  from {
-    opacity: 1;
-    transform: translateX(0);
-    width: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-    width: 0;
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-.animate-slide-out-from-search {
-  animation: slideOutFromSearch 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  animation-fill-mode: both;
-}
-
-.animate-slide-in-to-search {
-  animation: slideInToSearch 0.3s ease-in;
-  animation-fill-mode: both;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.8s ease-out forwards;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-up-delay-1 {
-  animation: slideUp 0.8s ease-out forwards;
-  animation-delay: 0.2s;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-.animate-slide-up-delay-2 {
-  animation: slideUp 0.8s ease-out forwards;
-  animation-delay: 0.4s;
-  opacity: 0;
-  transform: translateY(30px);
-}
-
-/* Search button */
+/* Button Styles */
 .button-style {
   background: var(--background);
   color: #000000;
@@ -386,19 +167,76 @@ textarea {
   box-shadow: none;
 }
 
-/* header search */
-.header-search-enter {
-  animation: headerSearchSlideIn 0.5s ease-out forwards;
+/* About Page Styles */
+.about-card-primary {
+  background-color: var(--background);
+  border: 1px solid var(--background);
 }
 
-.header-search-exit {
-  animation: headerSearchSlideOut 0.3s ease-in forwards;
+/* RTL Support for Input Fields */
+input[dir="rtl"],
+textarea[dir="rtl"] {
+  direction: rtl !important;
+  text-align: right !important;
+  unicode-bidi: bidi-override;
 }
 
-@keyframes headerSearchSlideIn {
+input[dir="rtl"]:focus,
+textarea[dir="rtl"]:focus {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+input[dir="rtl"]::placeholder,
+textarea[dir="rtl"]::placeholder {
+  text-align: right;
+  direction: rtl;
+}
+
+input[dir="ltr"],
+textarea[dir="ltr"] {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* Search Input Specific RTL/LTR Support */
+.search-input[dir="ltr"] {
+  padding-left: 3.5rem !important; /* pl-14 equivalent */
+  padding-right: 2.5rem !important; /* pr-10 equivalent */
+  text-align: left !important;
+}
+
+.search-input[dir="rtl"] {
+  padding-right: 3.5rem !important; /* pr-14 equivalent */
+  padding-left: 2.5rem !important; /* pl-10 equivalent */
+  text-align: right !important;
+}
+
+/* Core Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes searchEnter {
   0% {
     opacity: 0;
-    transform: translateY(-8px) scale(0.95);
+    transform: translateY(20px) scale(0.95);
   }
   100% {
     opacity: 1;
@@ -406,34 +244,40 @@ textarea {
   }
 }
 
-@keyframes headerSearchSlideOut {
+@keyframes titleFadeOut {
   0% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
   100% {
     opacity: 0;
-    transform: translateY(-8px) scale(0.95);
+    transform: translateY(-30px);
+    visibility: hidden;
   }
 }
 
-/* Enhanced transition utilities */
-.transition-smooth {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes searchCenterToTop {
+  0% {
+    transform: translateY(0) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-180px) scale(1);
+    opacity: 0.2;
+  }
 }
 
-.transition-smooth-fast {
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+/* Animation Classes */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/*  fade-in animation for all content */
 .animate-fade-in {
   animation: fadeIn 0.6s ease-out forwards;
   opacity: 0;
   transform: translateY(20px);
 }
 
-/* Position-based delay animations */
 .animate-delay-1 {
   animation: fadeIn 0.6s ease-out forwards;
   animation-delay: 0.1s;
@@ -462,138 +306,16 @@ textarea {
   transform: translateY(20px);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* About page card styles */
-.about-card-primary {
-  background-color: var(--background);
-  border: 1px solid var(--background);
-}
-
-/* Search bar animations */
 .animate-search-enter {
   animation: searchEnter 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   opacity: 0;
   transform: translateY(20px) scale(0.95);
 }
 
-.animate-search-bar-transition {
-  animation: searchBarTransition 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes searchEnter {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes searchBarTransition {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1.2);
-  }
-  30% {
-    opacity: 0.9;
-    transform: translateY(-80px) scale(1.1);
-  }
-  70% {
-    opacity: 0.95;
-    transform: translateY(-120px) scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(-150px) scale(1);
-  }
-}
-
-/* Main page layout transitions */
-.animate-layout-transition {
-  animation: layoutTransition 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes layoutTransition {
-  20% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  70% {
-    opacity: 0.8;
-    transform: scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Enhanced search bar size transitions */
-.search-bar-large {
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: center;
-}
-
-.search-bar-small {
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  transform-origin: center;
-}
-
-/* Search bar center-to-top transition */
-.animate-search-center-to-top {
-  animation: searchCenterToTop 0.4s ease-out forwards;
-}
-
 .animate-title-fade-out {
   animation: titleFadeOut 0.2s ease-out forwards;
 }
 
-.animate-content-slide-up {
-  animation: contentSlideUp 0.4s ease-out forwards;
-}
-
-@keyframes searchCenterToTop {
-  0% {
-    transform: translateY(0) scale(1.2);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-180px) scale(1);
-    opacity: 0.2;
-  }
-}
-
-@keyframes titleFadeOut {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-30px);
-    visibility: hidden;
-  }
-}
-
-@keyframes contentSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.animate-search-center-to-top {
+  animation: searchCenterToTop 0.4s ease-out forwards;
 }
