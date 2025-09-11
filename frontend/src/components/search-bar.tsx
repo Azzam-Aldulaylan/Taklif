@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -39,6 +39,11 @@ export function SearchBar({
     }
   };
 
+  const handleClear = () => {
+    setSearchTerm("");
+    setDirection('rtl');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim()) {
@@ -53,14 +58,31 @@ export function SearchBar({
       isLarge ? 'max-w-4xl search-bar-large' : 'max-w-2xl search-bar-small'
     }`}>
       <form onSubmit={handleSubmit} className="relative">
-
-        <Search className={`absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-all duration-200 ease-out ${
-          isLarge ? 'h-6 w-6' : 'h-5 w-5'
-        } ${direction === 'ltr' ? 'opacity-0' : 'opacity-100'}`} />
+        {/* Clear button for RTL (right side) */}
+        {searchTerm && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className={`absolute right-4 top-1/2 transform -translate-y-1/2 text-muted-foreground/70 hover:text-muted-foreground transition-all duration-200 ease-out flex items-center justify-center ${
+              isLarge ? 'h-6 w-6' : 'h-5 w-5'
+            } ${direction === 'ltr' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+          >
+            <X className="w-full h-full" />
+          </button>
+        )}
         
-        <Search className={`absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground transition-all duration-200 ease-out ${
-          isLarge ? 'h-6 w-6' : 'h-5 w-5'
-        } ${direction === 'ltr' ? 'opacity-100' : 'opacity-0'}`} />
+        {/* Clear button for LTR (left side) */}
+        {searchTerm && (
+          <button
+            type="button"
+            onClick={handleClear}
+            className={`absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground/70 hover:text-muted-foreground transition-all duration-200 ease-out flex items-center justify-center ${
+              isLarge ? 'h-6 w-6' : 'h-5 w-5'
+            } ${direction === 'ltr' ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
+            <X className="w-full h-full" />
+          </button>
+        )}
         
         <Input
           type="text"
@@ -74,7 +96,7 @@ export function SearchBar({
           disabled={isLoading}
         />
         <div
-          className={`absolute ${direction === 'rtl' ? 'left-1' : 'right-1 mr-2'} top-1/2 -translate-y-1/2 transition-all duration-300 ${
+          className={`absolute ${direction === 'rtl' ? 'left-1' : 'right-1 mr-2'} top-1/2 transform -translate-y-1/2 transition-all duration-300 ${
             showButton
               ? "opacity-100 translate-x-0 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -85,7 +107,7 @@ export function SearchBar({
             variant="secondary"
             disabled={!searchTerm.trim() || isLoading}
             isLoading={isLoading}
-            className={`button-style bg-white/30 border border-border/50 rounded-lg font-medium transition-all duration-200 ease-out ${
+            className={`button-style bg-white/30 border border-border/50 rounded-lg font-medium transition-all duration-200 ease-out flex items-center justify-center ${
               isLarge ? 'h-12 px-8 text-base shadow-lg' : 'h-10 px-6 text-sm shadow-md'
             }`}
           >

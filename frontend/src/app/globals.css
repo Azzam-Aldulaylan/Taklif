@@ -201,15 +201,19 @@ textarea[dir="ltr"] {
 
 /* Search Input Specific RTL/LTR Support */
 .search-input[dir="ltr"] {
-  padding-left: 3.5rem !important; /* pl-14 equivalent */
-  padding-right: 2.5rem !important; /* pr-10 equivalent */
+  padding-left: 3rem !important; /* pl-12 equivalent - space for clear button */
+  padding-right: 1rem !important; /* pr-4 equivalent - no search icon */
   text-align: left !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .search-input[dir="rtl"] {
-  padding-right: 3.5rem !important; /* pr-14 equivalent */
-  padding-left: 2.5rem !important; /* pl-10 equivalent */
+  padding-right: 3rem !important; /* pr-12 equivalent - space for clear button */
+  padding-left: 1rem !important; /* pl-4 equivalent - no search icon */
   text-align: right !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 /* Core Animations */
